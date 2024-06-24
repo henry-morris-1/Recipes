@@ -3,7 +3,7 @@ import { useContext, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 /** User context import */
-import { UserContext } from "../../main";
+import { UserContext } from "../../App";
 
 /** API import */
 import api from "../../api/api";

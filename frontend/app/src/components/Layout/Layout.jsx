@@ -3,7 +3,7 @@ import { useContext, useEffect } from "react";
 import { Outlet, ScrollRestoration, useLocation, useNavigate } from "react-router-dom";
 
 /** User context import */
-import { UserContext } from "../../main";
+import { UserContext } from "../../App";
 
 /** Component imports */
 import Header from "./Header";
