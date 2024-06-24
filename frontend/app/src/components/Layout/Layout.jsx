@@ -29,7 +29,7 @@ export default function Layout () {
             .catch(err => {
                 navigate("/login");
             });
-    })
+    }, []);
 
     // Remove the lock class from the body whenever the page changes
     useEffect(() => {
