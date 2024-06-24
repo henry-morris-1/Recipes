@@ -10,10 +10,12 @@ import api from "../../api/api";
 
 export default function Login () {
     const { user, setUser } = useContext(UserContext); // Global user state
-    const [username, setUsername] = useState(''); // Current username
-    const [password, setPassword] = useState(''); // Current password
+    const [username, setUsername] = useState(""); // Current username
+    const [password, setPassword] = useState(""); // Current password
     const navigate = useNavigate(); // Navigation hook
 
+    // Use the API to log in with the given credentials and redirect to the index
+    // page if successful
     function login () {
         if (username && password) {
             api.login(username, password)

@@ -38,7 +38,7 @@ export default function Layout () {
 
     return (
         <div className="bg-neutral-100 min-w-screen min-h-screen ">
-            <Header />
+            <Header setUser={ setUser } />
             <main className="flex justify-center">
                 <div className="container">
                     <Outlet />

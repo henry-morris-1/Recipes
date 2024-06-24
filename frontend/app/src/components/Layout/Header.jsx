@@ -1,44 +1,54 @@
 /** React imports */
-import { useRef } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useEffect, useRef } from "react";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 /** Component imports */
 import Menu from "../Menu/Menu";
-import { MenuButton } from '../Menu/Menu';
+import { MenuButton } from "../Menu/Menu";
+
+/** API import */
+import api from "../../api/api";
 
 /**
  * Page header consistent across the entire site
+ * @param {Function} setUser Function to set the global user context
  */
-export default function Header () {
-    // Keep a reference to the nav menu
-    const menuRef = useRef(null);
+export default function Header ({ setUser }) {
+    const menuRef = useRef(null); // Menu element ref
+    const navigate = useNavigate(); // Navigate hook
+    const location = useLocation(); // Location hook
 
-    // Keep the location of this page
-    const location = useLocation();
+    // Create an array of each item within the menu
+    const menuItems = [
+        {
+            text: "Suggestions",
+            icon: "batch_prediction",
+            link: ""
+        },
+        {
+            text: "Recipes",
+            icon: "receipt_long",
+            link: "recipes"
+        },
+        {
+            text: "Calendar",
+            icon: "calendar_month",
+            link: "calendar"
+        }
+    ];
+
+    // Log the user out using the API, then redirect them to the login page
+    function logout () {
+        api.logout().then(() => {
+            setUser(null);
+            navigate("/login");
+        });
+    }
     
     /**
      * Primary navigation menu between pages
      */
     function NavMenu () {
-        // Create an array of each item within the menu
-        const menuItems = [
-            {
-                text: 'Suggestions',
-                icon: 'batch_prediction',
-                link: ''
-            },
-            {
-                text: 'Recipes',
-                icon: 'receipt_long',
-                link: 'recipes'
-            },
-            {
-                text: 'Calendar',
-                icon: 'calendar_month',
-                link: 'calendar'
-            }
-        ];
-
         return (
             <nav>
                 <Menu ref={ menuRef }>
@@ -49,6 +59,13 @@ export default function Header () {
                                 {item.text}
                             </Link>
                         ))}
+                    </div>
+
+                    <div className="flex flex-col justify-end mt-auto">
+                        <button className="m-3 flex items-center justify-center p-3 bg-neutral-600 rounded-full text-lg font-medium" onClick={logout}>
+                            <i className="material-symbols-outlined me-3 text-[1.25em] icon-thick">logout</i>
+                            Logout
+                        </button>
                     </div>
                 </Menu>
             </nav>
