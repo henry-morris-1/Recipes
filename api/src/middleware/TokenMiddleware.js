@@ -47,7 +47,7 @@ exports.TokenMiddleware = (req, res, next) => {
 }
 
 /**
- * Generates a new JWT which lasts 1 hour
+ * Generates a new JWT which lasts 30 days
  * @param {Object} user User to create a token for
  * @returns New digest token for the given user
  */
@@ -57,7 +57,7 @@ exports.generateToken = (req, res, user) => {
             id: user.id,
             username: user.username,
         },
-        exp: Math.floor(Date.now() / 1000) + (60 * 60) // 1 hour expiration
+        exp: Math.floor(Date.now() / 1000) + (60 * 60 * 24 * 30) // Expiration of 30 days
     };
 
     delete data.user.salt;
@@ -66,8 +66,8 @@ exports.generateToken = (req, res, user) => {
 
     res.cookie(COOKIE_NAME, token, {
         httpOnly: true,
-        secure: true,
-        maxAge: 60 * 60 * 1000 // Expiration of 1 hour
+        secure: false, // !!!!! NOTE: WILL NOT WORK IN HTTP IF TRUE !!!!!
+        maxAge: 30 * 24 * 60 * 60 * 1000 // Expiration of 30 days
     });
 }
 
@@ -77,7 +77,7 @@ exports.generateToken = (req, res, user) => {
 exports.removeToken = (req, res) => {
     res.cookie(COOKIE_NAME, "", {
         httpOnly: true,
-        secure: true,
+        secure: false,// !!!!! NOTE: WILL NOT WORK IN HTTP IF TRUE !!!!!
         maxAge: -10000 // Set in the past so the browser deletes it
     });
 }
