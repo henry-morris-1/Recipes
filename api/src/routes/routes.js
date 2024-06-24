@@ -4,7 +4,7 @@ const router = express.Router();
 ////////////////////////////////////
 /** USER AUTHENTICATION ENDPOINTS */
 ////////////////////////////////////
-const authRoutes = require("./auth/auth");
+const authRoutes = require("./auth/authRoutes");
 router.use("/", authRoutes);
 
 /////////////////////////

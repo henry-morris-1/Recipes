@@ -14,10 +14,14 @@ const UserDAO = require("../../db/DAOs/userDAO");
 router.post("/login", (req, res) => {
     const { username, password } = req.body;
     
-    UserDAO.getUserByCredentials(username, password).then(user => {
-        generateToken(req, res, user);
-        res.json(user);
-    });
+    UserDAO.getUserByCredentials(username, password)
+        .then(user => {
+            generateToken(req, res, user);
+            res.status(200).json(user);
+        })
+        .catch(error => {
+            res.status(401).json({ error: error });
+        });
 });
 
 /**
