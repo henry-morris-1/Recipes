@@ -1,6 +1,9 @@
 /** Set up the router */
 const express = require("express");
+const cookieParser = require("cookie-parser");
+
 const router = express.Router();
+router.use(cookieParser());
 
 /** Import recipe DAO */
 const recipeDAO = require("../../db/DAOs/recipeDAO");

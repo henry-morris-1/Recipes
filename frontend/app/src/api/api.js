@@ -2,6 +2,38 @@
 import HTTPClient from "./HTTPClient";
 
 /**
+ * 
+ * @param {String} username 
+ * @param {String} password 
+ * @returns 
+ */
+const login = (username, password) => {
+    const url = "/api/login";
+    return HTTPClient.post(url, {
+        username: username,
+        password: password
+    });
+}
+
+/**
+ * 
+ * @returns 
+ */
+const logout = () => {
+    const url = "/api/logout";
+    return HTTPClient.post(url, {});
+}
+
+/**
+ * 
+ * @returns 
+ */
+const getCurrentUser = () => {
+    const url = "/api/current";
+    return HTTPClient.get(url);
+}
+
+/**
  * Get all recipes in the database.
  * @returns All recipes
  */
@@ -81,6 +113,9 @@ const updateCalendar = (calendar) => {
 }
 
 const api = {
+    login,
+    logout,
+    getCurrentUser,
     getRecipes,
     getRecipeById,
     getSimilarRecipes,

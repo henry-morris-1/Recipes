@@ -1,16 +1,37 @@
 /** React imports */
-import { useEffect } from "react";
-import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { Outlet, ScrollRestoration, useLocation, useNavigate } from "react-router-dom";
+
+/** User context import */
+import { UserContext } from "../../main";
 
 /** Component imports */
 import Header from "./Header";
+
+/** API import */
+import api from "../../api/api";
 
 /**
  * Layout defines the confines of the content on each page
  */
 export default function Layout () {
+    const { user, setUser } = useContext(UserContext); // Global user state
+    const navigate = useNavigate(); // Navigation hook
+    const location = useLocation(); // Location hook
+
+    // Get the current user or redirect to the login page if they arent
+    // authenticated
+    useEffect(() => {
+        api.getCurrentUser()
+            .then(res => {
+                setUser(res.user);
+            })
+            .catch(err => {
+                navigate("/login");
+            });
+    })
+
     // Remove the lock class from the body whenever the page changes
-    const location = useLocation();
     useEffect(() => {
         document.body.classList.remove("lock");
     }, [location.key]);

@@ -1,3 +1,23 @@
+-----------
+-- USERS --
+-----------
+CREATE TABLE IF NOT EXISTS `users` (
+    `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+    `username` varchar(100) NOT NULL,
+    `password` varchar(128) NOT NULL,
+    `salt` varchar(32) NOT NULL,
+    UNIQUE KEY (`username`),
+    PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- NOTE: Passwords follow the pattern "[username]password"
+DELETE FROM `users`;
+INSERT INTO `users` (`user_id`, `username`, `password`, `salt`) VALUES
+        (1, 'admin', '9df3f970ff6e9c45abae864a8e8ea1bb9d6f18ca98099a24b14d3348e35998ee3582f4047404fc870b16e56951819a2b7f9a2f3fb0af45aabceb61f54eddcbc8', '51361723dc3d501ffc33535c1fd0a1b2'),
+        (2, 'adriane', '0a9ccf83fb40c42db9c9229d79768f7d72fb4c42acb609b107f36dd251a551cc15015f7d8ba585522adf0cce8dadd7087fc8462e25846a233d7ea2c1179d1ae3', '528016538751bdb7e285aabed5be1587'),
+        (3, 'jeff', '0eb18adc5931472141affd8c95f98133911aac25f52729643d40d96dffa1e8aa229d840ca3e606cacfca186feb793cc52797cfb980b5f788c18cc638e4ceaed3', '5a1f769ecb8cb173db946329474d48c9'),
+        (4, 'henry', 'e8bae31ca295512fe68997c07a833eaf158c81081e8f4be2b8315f78f99a222d38e0d3947a359ab4798fb4af1dc2de2237939a5efad36b0fa6f4a67718cd7d77', '1336dd0b3bcb96f115bc7671dacea761');
+
 -------------
 -- RECIPES --
 -------------
@@ -23,7 +43,7 @@ INSERT INTO `recipes` (`recipe_id`, `recipe_name`, `is_new`, `a_rating`, `j_rati
         (7, 'Turkey Penne Pasta', 0, 10, 9, 9),
         (8, 'Breakfast Sandwiches', 0, 9, 10, 10),
         (9, 'Sheetpan Veggies', 0, 10, 10, 10),
-        (10, 'Shrimp Fried Rice', 1, NULL, NULL, NULL),
+        (10, 'Shrimp Fried Rice', 1, 8, 9, 8),
         (11, 'Breakfast Quesadillas', 0, 10, 10, 10);
 
 ----------
@@ -117,4 +137,11 @@ INSERT INTO `calendar` (`date`, `recipe_id_fk`) VALUES
     ('2024-06-19', 8),
     ('2024-06-20', 9),
     ('2024-06-21', NULL),
-    ('2024-06-22', 11);
+    ('2024-06-22', 11),
+    ('2024-06-23', 10),
+    ('2024-06-24', NULL),
+    ('2024-06-25', NULL),
+    ('2024-06-26', NULL),
+    ('2024-06-27', NULL),
+    ('2024-06-28', NULL),
+    ('2024-06-29', NULL);
