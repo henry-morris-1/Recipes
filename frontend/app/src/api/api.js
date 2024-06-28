@@ -63,6 +63,16 @@ const getSimilarRecipes = (recipeId) => {
 }
 
 /**
+ * Add a new recipe to the database
+ * @param {Object} recipe Recipe to add
+ * @returns The id of the new recipe
+ */
+const addRecipe = (recipe) => {
+    const url = "/api/recipes";
+    return HTTPClient.post(url, recipe);
+}
+
+/**
  * Updates the recipe with the given ID.
  * @param {Number} recipeId Recipe to update
  * @param {Object} recipe Recipe to insert
@@ -119,6 +129,7 @@ const api = {
     getRecipes,
     getRecipeById,
     getSimilarRecipes,
+    addRecipe,
     updateRecipe,
     getTags,
     getCalendar,

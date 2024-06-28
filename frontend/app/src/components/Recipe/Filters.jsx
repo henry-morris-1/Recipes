@@ -143,7 +143,7 @@ export function FilterList({ filters, setFilters }) {
     }, []);
 
     // Toggles the targeted filter to/from the filters list
-    function toggleFilter(event) {
+    function toggleFilter (event) {
         let newFilters = [...filters]; // Create a new copy of the filters to operate on
         let filter = event.target.innerHTML; // Get the name of the filter clicked
         let index = filters.indexOf(filter); // Get the index of the given filter
@@ -162,7 +162,7 @@ export function FilterList({ filters, setFilters }) {
     
     return (
         <div className="p-2">
-            <h2 className="p-1 text-3xl font-bold mb-2" htmlFor="sortSelect">Filter Tags</h2>
+            <h2 className="p-1 text-3xl font-bold mb-2">Filter Tags</h2>
             <div className="flex flex-wrap">
                 {tags && tags.map((tag, i) => (
                     <span 
