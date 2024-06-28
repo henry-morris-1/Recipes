@@ -1,12 +1,21 @@
 const db = require("../DBConnection");
 const Day = require("../models/Day");
 
+/**
+ * Gets the entire calendar from the database.
+ * @returns Calendar
+ */
 function getCalendar () {
     return db.query("SELECT date, recipe_id, recipe_name FROM calendar LEFT JOIN recipes ON calendar.recipe_id_fk = recipes.recipe_id ORDER BY date").then(({results}) => {
         return results.map(day => new Day(day));
     });
 }
 
+/**
+ * Adds the given dates to the calendar with null recipes
+ * @param {Array} newDays Array of datestrings to add
+ * @returns Entire calendar
+ */
 function postCalendar (newDays) {
     const promises = [];
 
@@ -21,6 +30,11 @@ function postCalendar (newDays) {
     });
 }
 
+/**
+ * Updates the recipe IDs for the given dates.
+ * @param {Array} calendar Array of date, recipe ID pairs to set in the calendar
+ * @returns Entire calendar
+ */
 function putCalendar (calendar) {
     const promises = [];
 
