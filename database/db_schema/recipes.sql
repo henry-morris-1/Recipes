@@ -24,7 +24,6 @@ INSERT INTO `users` (`user_id`, `username`, `password`, `salt`) VALUES
 CREATE TABLE IF NOT EXISTS `recipes` (
     `recipe_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
     `recipe_name` varchar(100) NOT NULL,
-    `is_new` boolean NOT NULL,
     `a_rating` int(10) unsigned,
     `j_rating` int(10) unsigned,
     `h_rating` int(10) unsigned,
@@ -33,18 +32,18 @@ CREATE TABLE IF NOT EXISTS `recipes` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 DELETE FROM `recipes`;
-INSERT INTO `recipes` (`recipe_id`, `recipe_name`, `is_new`, `a_rating`, `j_rating`, `h_rating`) VALUES
-        (1, 'Southwest Breakfast Skillet', 0, 10, 10, 10),
-        (2, 'Gnocchi with Broccoli and Beans', 0, 7, 8, 8),
-        (3, 'English Muffins', 0, 9, 9, 8),
-        (4, 'Chicken Fajita Bowls', 0, 8, 8, 8),
-        (5, 'Pizza', 0, 10, 10, 10),
-        (6, 'Waffles', 0, 10, 10, 10),
-        (7, 'Turkey Penne Pasta', 0, 10, 9, 9),
-        (8, 'Breakfast Sandwiches', 0, 9, 10, 10),
-        (9, 'Sheetpan Veggies', 0, 10, 10, 10),
+INSERT INTO `recipes` (`recipe_id`, `recipe_name`, `a_rating`, `j_rating`, `h_rating`) VALUES
+        (1, 'Southwest Breakfast Skillet', 10, 10, 10),
+        (2, 'Gnocchi with Broccoli and Beans', 7, 8, 8),
+        (3, 'English Muffins', 9, 9, 8),
+        (4, 'Chicken Fajita Bowls', 8, 8, 8),
+        (5, 'Pizza', 10, 10, 10),
+        (6, 'Waffles', 10, 10, 10),
+        (7, 'Turkey Penne Pasta', 10, 9, 9),
+        (8, 'Breakfast Sandwiches', 9, 10, 10),
+        (9, 'Sheetpan Veggies', 10, 10, 10),
         (10, 'Shrimp Fried Rice', 1, 8, 9, 8),
-        (11, 'Breakfast Quesadillas', 0, 10, 10, 10);
+        (11, 'Breakfast Quesadillas', 10, 10, 10);
 
 ----------
 -- TAGS --
