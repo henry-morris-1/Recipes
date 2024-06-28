@@ -54,8 +54,25 @@ function getSimilarRecipes (id) {
     });
 }
 
+function addRecipe (recipe) {
+    return db.query("INSERT IGNORE INTO recipes (recipe_name, a_rating, j_rating, h_rating) VALUES (?, ?, ?, ?) RETURNING recipe_id;", [recipe.name, recipe.aRating, recipe.jRating, recipe.hRating]).then(({results}) => {
+        id = results[0] && results[0].recipe_id;
+        const promises = [];
+
+        recipe.tags.forEach(tag => {
+            promises.push(db.query("INSERT IGNORE INTO recipe_tags (recipe_id_fk, tag_name_fk) VALUES (?, ?)", [id, tag]).then(() => {
+                return;
+            }));
+        });
+
+        return Promise.all(promises).then(() => {
+            return getRecipeById(id);
+        });
+    });
+}
+
 function updateRecipe (id, recipe) {
-    return db.query("UPDATE recipes SET recipe_name = ?, is_new = ?, a_rating = ?, j_rating = ?, h_rating = ? WHERE recipe_id = ?", [recipe.name, recipe.isNew, recipe.aRating, recipe.jRating, recipe.hRating, id]).then(() => {
+    return db.query("UPDATE recipes SET recipe_name = ?, a_rating = ?, j_rating = ?, h_rating = ? WHERE recipe_id = ?", [recipe.name, recipe.aRating, recipe.jRating, recipe.hRating, id]).then(() => {
         return getRecipeById(id);
     });
 }
@@ -64,5 +81,6 @@ module.exports = {
     getRecipes: getRecipes,
     getRecipeById: getRecipeById,
     getSimilarRecipes: getSimilarRecipes,
+    addRecipe: addRecipe,
     updateRecipe: updateRecipe
 };

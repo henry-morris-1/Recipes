@@ -52,13 +52,26 @@ router.get("/:recipeId/similar", (req, res) => {
 });
 
 /**
+ * Add a new recipe
+ */
+router.post("/", (req, res) => {
+    const recipe = req.body;
+
+    recipeDAO.addRecipe(recipe).then(recipe => {
+        if (recipe) {
+            res.status(200).json(recipe);
+        } else {
+            res.status(404).json({ error: "Error creating recipe" });
+        }
+    });
+});
+
+/**
  * Update a recipe with the given id
  */
 router.put("/:recipeId", (req, res) => {
     const recipeId = req.params.recipeId;
     const recipe = req.body;
-
-    console.log(recipe);
 
     recipeDAO.updateRecipe(recipeId, recipe).then(recipe => {
         if (recipe) {

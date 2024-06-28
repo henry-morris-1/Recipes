@@ -42,7 +42,7 @@ INSERT INTO `recipes` (`recipe_id`, `recipe_name`, `a_rating`, `j_rating`, `h_ra
         (7, 'Turkey Penne Pasta', 10, 9, 9),
         (8, 'Breakfast Sandwiches', 9, 10, 10),
         (9, 'Sheetpan Veggies', 10, 10, 10),
-        (10, 'Shrimp Fried Rice', 1, 8, 9, 8),
+        (10, 'Shrimp Fried Rice', 8, 9, 8),
         (11, 'Breakfast Quesadillas', 10, 10, 10);
 
 ----------

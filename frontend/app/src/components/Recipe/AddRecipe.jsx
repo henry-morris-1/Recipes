@@ -1,5 +1,6 @@
 /** React imports */
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom"
 
 /** API import */
 import api from "../../api/api";
@@ -9,8 +10,9 @@ import api from "../../api/api";
  * to the page for the newly created recipe.
  */
 export default function () {
+    const navigate = useNavigate();
+
     // State variables for the form inputs
-    const [recipe, setRecipe] = useState(null);
     const [name, setName] = useState("");
     const [tags, setTags] = useState([]);
     const [aRating, setARating] = useState("");
@@ -32,9 +34,10 @@ export default function () {
             hRating: hRating || null
         }
 
-        // Set the new recipe
-        setRecipe(newRecipe);
-        console.log(newRecipe);
+        // Make the API call and navigate to the new recipe
+        api.addRecipe(newRecipe).then(response => {
+            navigate(`/recipes/${response[0].id}`);
+        });
     }
 
     return (
