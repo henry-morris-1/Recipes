@@ -17,7 +17,9 @@ export default function Login () {
 
     // Use the API to log in with the given credentials and redirect to the index
     // page if successful
-    function login () {
+    function login (event) {
+        event.preventDefault();
+
         if (username && password) {
             api.login(username, password)
                 .then(res => {
@@ -45,11 +47,11 @@ export default function Login () {
                 </>}
                 
                 <div className="p-3">
-                    <div className="flex flex-col items-center">
+                    <form className="flex flex-col items-center">
                         <input className="w-full mb-6 px-3 py-4 rounded-full bg-neutral-600" type="text" name="Username" maxLength={50} placeholder="Username" onChange={(e) => setUsername(e.target.value)} value={username} />
                         <input className="w-full mb-6 px-3 py-4 rounded-full bg-neutral-600" type="password" name="Password" maxLength={50} placeholder="Password" onChange={(e) => setPassword(e.target.value)} value={password} />
                         <button className="w-full px-3 py-4 bg-blue-600 rounded-full" onClick={login}>Login</button>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
