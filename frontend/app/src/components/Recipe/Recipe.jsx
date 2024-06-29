@@ -70,7 +70,7 @@ export default function Recipe () {
                 <p className="text-base mt-3 mb-4">{recipe.tags.join(", ")}</p>
                 
                 {ratingData && <>
-                    <TabContainer className=" bg-neutral-300 after:bg-neutral-300" title={ <RatingTableModal ratingData={ ratingData } recipe={ recipe } formatRecipe={ formatRecipe } /> }>
+                    <TabContainer className=" bg-neutral-300 after:bg-neutral-300" title={ "Ratings" }>
                         {ratingData && <>
                             <Table>
                                 {ratingData.map((row, i) => (
@@ -84,7 +84,9 @@ export default function Recipe () {
                                 ))}
 
                                 <TableRow>
-                                    <TableData>Avg</TableData>
+                                    <TableData>
+                                        Avg.
+                                    </TableData>
                                     <TableData className="text-2xl font-bold py-0">
                                         <RatingBadge rating={ recipe.avgRating } />
                                     </TableData>
@@ -109,75 +111,5 @@ export default function Recipe () {
 
             </div>}
         </div>
-    );
-}
-
-/**
- * Modal for setting and saving new ratings for the recipe.
- * @param {Object} recipe Current recipe state
- * @param {Function} formatRecipe Takes in an API response and sets the recipe
- */
-function RatingTableModal ({ recipe, formatRecipe }) {
-    // Get a reference to the modal for the modal button
-    const modalRef = useRef(null);
-
-    // Track the selected values and update them when the input changes
-    const [selected, setSelected] = useState([["Adriane", recipe.aRating || ""], ["Jeff", recipe.jRating || ""], ["Henry", recipe.hRating || ""]]);
-    function handleChange (event, index) {
-        const newSelected = [...selected]; // Copy the value of selected
-        let { min, max, value } = event.target; // Get the min, max, and input value
-
-        if (value) {
-            value = Math.max(Number(min), Math.min(Number(max), Number(value)));  // Bound value by min and max
-        }
-        
-        newSelected[index][1] = value; // Insert value into the new selected array
-        setSelected(newSelected); // Set the new selected array
-    }
-
-    // Save the updated ratings to the database
-    function save () {
-        // Create a deep copy of the current recipe
-        const newRecipe = JSON.parse(JSON.stringify(recipe));
-
-        // Put the newly selected values in
-        newRecipe.aRating = selected[0][1] || null;
-        newRecipe.jRating = selected[1][1] || null;
-        newRecipe.hRating = selected[2][1] || null;
-
-        // Make the API call, then update the recipe with the response
-        api.updateRecipe(recipe.id, newRecipe).then(formatRecipe);
-    }
-
-    return (
-        <>
-            <Modal title={ "Edit Ratings" } ref={ modalRef }>
-                {selected.map((rating, i) => (
-                    <label className="flex items-center justify-between mb-3" key={ i }>
-                        <span className="text-base font-medium">
-                            {rating[0]}
-                        </span>
-                        <input type="number" className="px-3 py-4 m-0 w-20 text-center text-sm font-bold rounded-full bg-neutral-600" name={`Set ${rating[0]}'s rating`} min="1" max="10" value={rating[1]} onChange={(e) => {handleChange(e, i)}} />
-                    </label>
-                ))}
-
-                <div className="flex items-center justify-end mt-6">
-                    <button className="px-3 py-1 bg-neutral-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle">
-                        CANCEL
-                    </button>
-                    <button className="ms-3 px-3 py-1 bg-blue-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={ save }>
-                        SAVE
-                    </button>
-                </div>
-            </Modal>
-
-            <h1 className="flex items-center">
-                Ratings
-
-                <ModalButton modalRef={ modalRef }>
-                    <i role="button" className="material-symbols-outlined ml-3 click-toggle">stylus</i>
-                </ModalButton>
-            </h1>
-        </>
     );
 }
