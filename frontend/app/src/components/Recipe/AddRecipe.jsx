@@ -57,10 +57,14 @@ export default function () {
                     <RatingInput name={ "Henry" } id={ "hRating" } value={ hRating } setValue={ setHRating } />
                 </fieldset>
 
-                <button className="flex items-center px-3 py-1 rounded-full uppercase bg-green-600 text-white" onClick={submit}>
-                    Submit
-                    <i className="material-symbols-outlined text-[1.25em] ms-1">arrow_forward</i>
-                </button>
+                <div className="w-full flex items-center justify-end">
+                    <button className="px-3 py-1 bg-neutral-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={e => {e.preventDefault()}}>
+                        CANCEL
+                    </button>
+                    <button className="ms-3 px-3 py-1 bg-blue-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold" onClick={submit}>
+                        SUBMIT
+                    </button>
+                </div>
             </form>
         </div>
     );
@@ -92,7 +96,7 @@ function NameInput ({name, setName}) {
                 <h2 className="text-2xl font-semibold" htmlFor="name">Name</h2>
                 <hr className="w-full border-t border-current mb-3" />
             </div>
-            <input className="w-full mx-1 px-4 py-1 bg-neutral-600 rounded-full text-lg" id="name" name="Name" maxLength={100} type="text" value={name} onChange={handleChange} />
+            <input className="w-full mx-1 px-4 py-1 bg-neutral-600 shadow-md rounded-full text-lg" id="name" name="Name" maxLength={100} type="text" value={name} onChange={handleChange} />
         </fieldset>
     );
 }
@@ -137,7 +141,7 @@ function TagsInput ({tags, setTags}) {
                     <span 
                     key={ i }
                     role="button"
-                    className={"inline m-1 px-3 py-1 rounded-full select-none text-sm uppercase font-semibold " + (tags.includes(tag) ? "bg-blue-600" : "bg-neutral-600")}
+                    className={"inline m-1 px-3 py-1 rounded-full shadow-md select-none text-sm uppercase font-semibold " + (tags.includes(tag) ? "bg-blue-600" : "bg-neutral-600")}
                     onClick={toggleTag}>
                         {tag}
                     </span>
@@ -171,9 +175,9 @@ function RatingInput ({name, id, value, setValue}) {
 
     return (
         <div className="w-full flex items-center justify-between mt-2">
-            <label className="text-lg font-medium" htmlFor={id}>{name}</label>
-            <span className="grow mx-3 border-b-2 border-dotted border-neutral-300"></span>
-            <input className="px-6 py-1 bg-neutral-600 rounded-full text-lg text-center" id={id} name={`${name}'s rating`} min={1} max={10} type="number" value={value} onChange={handleChange} />
+            <label className="text-lg font-medium text-neutral-200" htmlFor={id}>{name}</label>
+            <span className="grow mx-3 border-b-2 border-dotted border-neutral-200"></span>
+            <input className="px-6 py-1 bg-neutral-600 shadow-md rounded-full text-lg text-center" id={id} name={`${name}'s rating`} min={1} max={10} type="number" value={value} onChange={handleChange} />
         </div>
     );
 }

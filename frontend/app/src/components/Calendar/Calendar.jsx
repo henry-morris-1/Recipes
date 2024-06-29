@@ -187,7 +187,7 @@ function CalendarModal ({ day, dateString, recipes, formatCalendar }) {
 
             <Modal title={ dateString } ref={ modalRef }>
                 {day.recipeId && <>
-                    <Link to={"/recipes/" + day.recipeId} role="button" className="px-3 py-4 flex items-center justify-center w-full rounded-full bg-neutral-600 uppercase text-sm font-bold leading-4">
+                    <Link to={"/recipes/" + day.recipeId} role="button" className="px-3 py-4 flex items-center justify-center w-full rounded-full shadow-md bg-neutral-600 uppercase text-sm font-bold leading-4">
                         {day.recipeName}
                         <i className="material-symbols-outlined ms-1 icon-thick" style={{fontSize: "1.3em"}}>arrow_outward</i>
                     </Link>
@@ -203,7 +203,7 @@ function CalendarModal ({ day, dateString, recipes, formatCalendar }) {
 
                 <h2 className="mb-1 text-md font-medium text-center text-neutral-200">Select a new recipe</h2>
 
-                <select className="px-3 py-4 mb-3 overflow-hidden w-full rounded-full bg-neutral-600 uppercase text-sm font-bold leading-4 text-ellipsis whitespace-pre" name="Set recipe" value={JSON.stringify(selected)} onChange={handleChange}>
+                <select className="px-3 py-4 mb-3 overflow-hidden w-full rounded-full shadow-md bg-neutral-600 uppercase text-sm font-bold leading-4 text-ellipsis whitespace-pre" name="Set recipe" value={JSON.stringify(selected)} onChange={handleChange}>
                     <option value={JSON.stringify({"name": null, "id": null})}></option>
 
                     {recipes && recipes.map((recipe, i) => (
@@ -214,10 +214,10 @@ function CalendarModal ({ day, dateString, recipes, formatCalendar }) {
                 </select>
 
                 <div className="flex items-center justify-end mt-3">
-                    <button className="px-3 py-1 bg-neutral-600 rounded-3xl select-none text-sm uppercase font-semibold click-toggle">
+                    <button className="px-3 py-1 bg-neutral-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle">
                         CANCEL
                     </button>
-                    <button className="ms-3 px-3 py-1 bg-blue-600 rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={ save }>
+                    <button className="ms-3 px-3 py-1 bg-blue-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={ save }>
                         SAVE
                     </button>
                 </div>
