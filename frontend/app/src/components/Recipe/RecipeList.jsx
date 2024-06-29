@@ -108,7 +108,7 @@ function AddRecipeModal () {
             </Modal>
 
             <ModalButton modalRef={modalRef}>
-                <button className="flex items-center mx-3 p-[0.125em] rounded-full bg-green-600 text-white click-toggle">
+                <button className="flex items-center mx-3 p-[0.025em] rounded-full bg-green-600 text-white click-toggle">
                     <i className="material-symbols-outlined text-[1.25em] click-toggle">add</i>
                 </button>
             </ModalButton>

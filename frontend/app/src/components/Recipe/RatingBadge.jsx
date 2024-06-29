@@ -10,9 +10,10 @@ export default function RatingBadge ({ rating }) {
         // linear: 12 * rating;
         // quadratic: Math.pow(1.1 * rating, 2);
         // quartic: Math.pow(rating / 3, 4);
+
         let h = Math.pow(rating / 2, 3); // Hue (cubic)
-        let s = 67; // Saturation
-        let l = 45; // Lightness
+        let s = 70; // Saturation
+        let l = 40; // Lightness
 
         return (rating === 0) ? "#999" : `hsl(${h}deg ${s}% ${l}%)`;
     }
