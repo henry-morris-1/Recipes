@@ -25,9 +25,9 @@ export function TableRow ({ children, className }) {
 /**
  * Table cell
  */
-export function TableData ({ children }) {
+export function TableData ({ children, className }) {
     return (
-        <td className="p-4 text-center first-of-type:text-left last-of-type:text-right">
+        <td className={"p-4 text-center first-of-type:text-left last-of-type:text-right " + className}>
             {children}
         </td>
     );

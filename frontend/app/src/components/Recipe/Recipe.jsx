@@ -57,11 +57,17 @@ export default function Recipe () {
         <div className="m-2">
             {recipe && <>
                 <div className="flex items-center justify-between text-4xl leading-8 uppercase font-bold">
-                    <h4 className="me-3">{recipe.name}</h4>
-                    <RatingBadge rating={ recipe.avgRating } />
+                    <div className="flex items-center">
+                        <h5 className="text-xl text-neutral-500">#{recipe.id}</h5>
+                        <h4 className="mx-3">{recipe.name}</h4>
+                    </div>
+
+                    <button>
+                        <i className="material-symbols-outlined">stylus</i>
+                    </button>
                 </div>
 
-                <p className="mt-3 mb-4">{recipe.tags.join(", ")}</p>
+                <p className="text-base mt-3 mb-4">{recipe.tags.join(", ")}</p>
                 
                 {ratingData && <>
                     <TabContainer className=" bg-neutral-300 after:bg-neutral-300" title={ <RatingTableModal ratingData={ ratingData } recipe={ recipe } formatRecipe={ formatRecipe } /> }>
@@ -70,12 +76,19 @@ export default function Recipe () {
                                 {ratingData.map((row, i) => (
                                     <TableRow key={ i }>
                                         {row.map((value, j) => (
-                                            <TableData key={ j }>
+                                            <TableData className="even:px-[1.75em]" key={ j }>
                                                 {value}
                                             </TableData>
                                         ))}
                                     </TableRow>
                                 ))}
+
+                                <TableRow>
+                                    <TableData>Avg</TableData>
+                                    <TableData className="text-2xl font-bold py-0">
+                                        <RatingBadge rating={ recipe.avgRating } />
+                                    </TableData>
+                                </TableRow>
                             </Table>
                         </>}
                     </TabContainer>
