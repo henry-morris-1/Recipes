@@ -31,11 +31,6 @@ export default function Header ({ setUser }) {
             link: "recipes"
         },
         {
-            text: "Add a recipe",
-            icon: "add_circle",
-            link: "addrecipe"
-        },
-        {
             text: "Calendar",
             icon: "calendar_month",
             link: "calendar"

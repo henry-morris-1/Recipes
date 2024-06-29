@@ -1,14 +1,17 @@
 /** React imports */
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from "react";
 
 /** Import the recipe API */
-import api from '../../api/api';
+import api from "../../api/api";
 
 /** Import components */
-import { FilterList, SortSelection } from './Filters';
-import RecipeCard from './RecipeCard';
 import Menu from "../Menu/Menu";
-import { MenuButton } from '../Menu/Menu';
+import { MenuButton } from "../Menu/Menu";
+import Modal from "../Modal/Modal";
+import { ModalButton } from "../Modal/Modal";
+import { FilterList, SortSelection } from "./Filters";
+import AddRecipe from "./AddRecipe";
+import RecipeCard from "./RecipeCard";
 
 /**
  * The recipe list page shows all recipes in the system and allows
@@ -64,8 +67,12 @@ export default function RecipeList () {
 
     return (
         <div className="m-2">
-            <div className="flex items-center justify-between mb-5">
-                <h1 className="my-2 py-1 text-4xl leading-7 uppercase font-bold">Recipes</h1>
+            <div className="flex flex-wrap items-center justify-between mb-5">
+                <div className="flex items-center">
+                    <h1 className="my-2 py-1 text-4xl leading-7 uppercase font-bold">Recipes</h1>
+
+                    <AddRecipeModal />
+                </div>
 
                 <MenuButton menuRef={ menuRef }>
                     FILTERS
@@ -85,5 +92,26 @@ export default function RecipeList () {
                 ))}
             </div>
         </div>
+    );
+}
+
+/**
+ * Modal for adding a recipe
+ */
+function AddRecipeModal () {
+    const modalRef = useRef(null);
+
+    return (
+        <>
+            <Modal title={"Add a Recipe"} ref={modalRef}>
+                <AddRecipe />
+            </Modal>
+
+            <ModalButton modalRef={modalRef}>
+                <button className="flex items-center mx-3 p-[0.125em] rounded-full bg-green-600 text-white click-toggle">
+                    <i className="material-symbols-outlined text-[1.25em] click-toggle">add</i>
+                </button>
+            </ModalButton>
+        </>
     );
 }

@@ -41,34 +41,27 @@ export default function () {
     }
 
     return (
-        <div className="m-2">
-            <div className="flex items-center justify-between text-4xl leading-8 uppercase font-bold">
-                <h4 className="me-3">Add a recipe</h4>
-            </div>
+        <div className="w-full flex justify-center">
+            <form className="w-full sm:max-w-2xl flex flex-col items-center">
+                <NameInput name={ name } setName={ setName } />
 
-            <div className="w-full flex justify-center">
-                <form className="w-full sm:max-w-2xl flex flex-col items-center mt-6">
-                    <NameInput name={ name } setName={ setName } />
+                <TagsInput tags={ tags } setTags={ setTags } />
 
-                    <TagsInput tags={ tags } setTags={ setTags } />
+                <fieldset className="w-full flex flex-col items-center mb-6">
+                    <div className="w-full">
+                        <h2 className="text-2xl font-semibold" htmlFor="name">Ratings</h2>
+                        <hr className="w-full border-t border-current mb-1" />
+                    </div>
+                    <RatingInput name={ "Adriane" } id={ "aRating" } value={ aRating } setValue={ setARating } />
+                    <RatingInput name={ "Jeff" } id={ "jRating" } value={ jRating } setValue={ setJRating } />
+                    <RatingInput name={ "Henry" } id={ "hRating" } value={ hRating } setValue={ setHRating } />
+                </fieldset>
 
-                    <fieldset className="w-full flex flex-col items-center mb-6">
-                        <div className="w-full">
-                            <h2 className="text-3xl font-semibold" htmlFor="name">Ratings</h2>
-                            <hr className="w-full border-t border-current mb-1" />
-                        </div>
-                        <RatingInput name={ "Adriane" } id={ "aRating" } value={ aRating } setValue={ setARating } />
-                        <RatingInput name={ "Jeff" } id={ "jRating" } value={ jRating } setValue={ setJRating } />
-                        <RatingInput name={ "Henry" } id={ "hRating" } value={ hRating } setValue={ setHRating } />
-                    </fieldset>
-
-                    <button className="flex items-center px-3 py-1 rounded-full uppercase bg-green-600 text-white" onClick={submit}>
-                        Submit
-                        <i className="material-symbols-outlined text-[1.25em] ms-1">arrow_forward</i>
-                    </button>
-                </form>
-            </div>
-            
+                <button className="flex items-center px-3 py-1 rounded-full uppercase bg-green-600 text-white" onClick={submit}>
+                    Submit
+                    <i className="material-symbols-outlined text-[1.25em] ms-1">arrow_forward</i>
+                </button>
+            </form>
         </div>
     );
 }
@@ -96,10 +89,10 @@ function NameInput ({name, setName}) {
     return (
         <fieldset className="w-full flex flex-col items-center mb-6">
             <div className="w-full">
-                <h2 className="text-3xl font-semibold" htmlFor="name">Name</h2>
+                <h2 className="text-2xl font-semibold" htmlFor="name">Name</h2>
                 <hr className="w-full border-t border-current mb-3" />
             </div>
-            <input className="w-full mx-1 px-4 py-1 bg-neutral-300 rounded-full text-lg" id="name" name="Name" maxLength={100} type="text" value={name} onChange={handleChange} />
+            <input className="w-full mx-1 px-4 py-1 bg-neutral-600 rounded-full text-lg" id="name" name="Name" maxLength={100} type="text" value={name} onChange={handleChange} />
         </fieldset>
     );
 }
@@ -136,7 +129,7 @@ function TagsInput ({tags, setTags}) {
     return (
         <fieldset className="flex flex-col items-center mb-6">
             <div className="w-full">
-                <h2 className="text-3xl font-semibold" htmlFor="name">Tags</h2>
+                <h2 className="text-2xl font-semibold" htmlFor="name">Tags</h2>
                 <hr className="w-full border-t border-current mb-2" />
             </div>
             <div className="flex flex-wrap justify-around">
@@ -144,7 +137,7 @@ function TagsInput ({tags, setTags}) {
                     <span 
                     key={ i }
                     role="button"
-                    className={"inline m-1 px-3 py-1 rounded-full select-none text-sm uppercase font-semibold " + (tags.includes(tag) ? "bg-blue-300" : "bg-neutral-300")}
+                    className={"inline m-1 px-3 py-1 rounded-full select-none text-sm uppercase font-semibold " + (tags.includes(tag) ? "bg-blue-600" : "bg-neutral-600")}
                     onClick={toggleTag}>
                         {tag}
                     </span>
@@ -179,8 +172,8 @@ function RatingInput ({name, id, value, setValue}) {
     return (
         <div className="w-full flex items-center justify-between mt-2">
             <label className="text-lg font-medium" htmlFor={id}>{name}</label>
-            <span className="grow mx-3 border-b-2 border-dotted border-neutral-400"></span>
-            <input className="px-6 py-1 bg-neutral-300 rounded-full text-lg text-center" id={id} name={`${name}'s rating`} min={1} max={10} type="number" value={value} onChange={handleChange} />
+            <span className="grow mx-3 border-b-2 border-dotted border-neutral-300"></span>
+            <input className="px-6 py-1 bg-neutral-600 rounded-full text-lg text-center" id={id} name={`${name}'s rating`} min={1} max={10} type="number" value={value} onChange={handleChange} />
         </div>
     );
 }

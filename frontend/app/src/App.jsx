@@ -8,7 +8,6 @@ import Layout from "./components/Layout/Layout";
 import Home from "./components/Home/Home";
 import RecipeList from "./components/Recipe/RecipeList";
 import Recipe from "./components/Recipe/Recipe";
-import AddRecipe from "./components/Recipe/AddRecipe";
 import Calendar from "./components/Calendar/Calendar";
 
 /** Export the current user context */
@@ -35,10 +34,6 @@ const router = createBrowserRouter([
             {
                 path: "recipes/:id",
                 element: <Recipe />
-            },
-            {
-                path: "addrecipe",
-                element: <AddRecipe />
             },
             {
                 path: "calendar",
