@@ -57,10 +57,10 @@ export default function Recipe () {
     return (
         <div className="m-2">
             {recipe && <>
-                <div className="flex items-center justify-between text-4xl leading-8 uppercase font-bold">
+                <div className="flex items-center justify-between text-4xl leading-8 font-bold">
                     <div className="flex items-center">
                         <h5 className="text-xl text-neutral-500">#{recipe.id}</h5>
-                        <h4 className="mx-3">{recipe.name}</h4>
+                        <h4 className="mx-3 uppercase">{recipe.name}</h4>
                     </div>
 
                     <EditRecipeModal recipe={ recipe } setRecipe={ setRecipe } />
@@ -103,7 +103,6 @@ export default function Recipe () {
                                 <div className="border border-current rounded-2xl" key={ i }>
                                     <RecipeCard recipe={ recipe } />
                                 </div>
-                                
                             ))}
                         </div>
                     </TabContainer>
