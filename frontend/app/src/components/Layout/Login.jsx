@@ -20,7 +20,7 @@ export default function Login () {
         api.getCurrentUser()
             .then(res => {
                 setUser(res.user);
-                navigate("/")
+                navigate("/", { state: {from: "/login"} });
             });
     }, []);
 
@@ -33,7 +33,7 @@ export default function Login () {
             api.login(username, password)
                 .then(res => {
                     setUser(res);
-                    navigate("/");
+                    navigate("/" , { state: {from: "/login"} });
                 })
                 .catch(err => {
                     setError(true);

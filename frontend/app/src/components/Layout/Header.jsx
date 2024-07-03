@@ -18,6 +18,10 @@ export default function Header ({ setUser }) {
     const navigate = useNavigate(); // Navigate hook
     const location = useLocation(); // Location hook
 
+    useEffect(() => {
+        console.log(location);
+    }, [location]);
+
     // Create an array of each item within the menu
     const menuItems = [
         {
@@ -75,7 +79,7 @@ export default function Header ({ setUser }) {
     return (
         <header className="flex justify-center">
             <div className="container relative flex items-center justify-between p-2">
-                <div>{(location.key !== "default") && <>
+                <div>{(location.key !== "default" && !(location.state && location.state.from === "/login")) && <>
                     <Link to={-1} className="flex items-center my-2 px-2 py-1">
                         <i className="material-symbols-outlined me-1 pointer-events-none icon-medium">arrow_back</i>
                         BACK
