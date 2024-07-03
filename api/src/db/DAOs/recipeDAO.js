@@ -98,14 +98,31 @@ function addRecipe (recipe) {
 }
 
 /**
- * Updates the ratings of the given recipe
+ * Updates the name, tags, and ratings of the given recipe
  * @param {Number} id ID of the recipe to update
  * @param {Object} recipe Updated recipe object
  * @returns Updated recipe
  */
 function updateRecipe (id, recipe) {
+    // Set the name and ratings
     return db.query("UPDATE recipes SET recipe_name = ?, a_rating = ?, j_rating = ?, h_rating = ? WHERE recipe_id = ?", [recipe.name, recipe.aRating, recipe.jRating, recipe.hRating, id]).then(() => {
-        return getRecipeById(id);
+        // Remove all tags
+        return db.query("DELETE FROM recipe_tags WHERE recipe_id_fk = ?", [id]).then(() => {
+            // Create an array of promises
+            const promises = [];
+
+            // Insert the tags back into the table
+            recipe.tags.forEach(tag => {
+                promises.push(db.query("INSERT IGNORE INTO recipe_tags (recipe_id_fk, tag_name_fk) VALUES (?, ?)", [Number(id), tag]).then(() => {
+                    return;
+                }));
+            });
+
+            // Return the updated recipe once the tags have been inserted
+            return Promise.all(promises).then(() => {
+                return getRecipeById(id);
+            });
+        });
     });
 }
 
