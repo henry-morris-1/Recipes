@@ -33,6 +33,7 @@ export default function Layout () {
 
     // Remove the lock class from the body whenever the page changes
     useEffect(() => {
+        document.body.classList.add("bg-neutral-100"); // Ensure the body's background matches
         document.body.classList.remove("lock");
     }, [location.key]);
 
