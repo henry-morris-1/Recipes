@@ -7,10 +7,11 @@ import api from "../../api/api";
 
 /** Component imports */
 import RatingBadge from "./RatingBadge";
-import TabContainer from "../Container/TabContainer";
-import { Table, TableData, TableRow } from "../Table/Table";
+import EditRecipe from "./EditRecipe";
 import Modal from "../Modal/Modal";
 import { ModalButton } from "../Modal/Modal";
+import TabContainer from "../Container/TabContainer";
+import { Table, TableData, TableRow } from "../Table/Table";
 import RecipeCard from "./RecipeCard";
 
 /**
@@ -62,9 +63,7 @@ export default function Recipe () {
                         <h4 className="mx-3">{recipe.name}</h4>
                     </div>
 
-                    <button>
-                        <i className="material-symbols-outlined">stylus</i>
-                    </button>
+                    <EditRecipeModal recipe={ recipe } setRecipe={ setRecipe } />
                 </div>
 
                 <p className="text-base mt-3 mb-4">{recipe.tags.join(", ")}</p>
@@ -111,5 +110,23 @@ export default function Recipe () {
 
             </div>}
         </div>
+    );
+}
+
+function EditRecipeModal ({ recipe, setRecipe }) {
+    const modalRef = useRef(null);
+
+    return (
+        <>
+            <Modal title={"Edit recipe"} ref={modalRef}>
+                <EditRecipe recipe={ recipe } setRecipe={ setRecipe } />
+            </Modal>
+
+            <ModalButton modalRef={modalRef}>
+                <button className="click-toggle">
+                    <i className="material-symbols-outlined click-toggle">stylus</i>
+                </button>
+            </ModalButton>
+        </>
     );
 }
