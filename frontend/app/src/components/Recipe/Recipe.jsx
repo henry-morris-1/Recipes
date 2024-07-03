@@ -36,7 +36,7 @@ export default function Recipe () {
         api.getSimilarRecipes(id).then(response => {
             setSimilarRecipes(response);
         });
-    }, [id]);
+    }, [recipe]);
 
     // Put the ratings data into a 2D array for display in the table
     const [ratingData, setRatingData] = useState(null);
