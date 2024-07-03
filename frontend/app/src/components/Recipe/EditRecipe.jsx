@@ -18,6 +18,10 @@ export default function EditRecipe ({ recipe, setRecipe }) {
     const [jRating, setJRating] = useState(recipe.jRating);
     const [hRating, setHRating] = useState(recipe.hRating);
 
+    function remove (event) {
+        event.preventDefault();
+    }
+
     // Handle submission by creating a new recipe object from the state variables, submitting
     // to the API, then updating the recipe and closing the modal.
     function submit (event) {
@@ -56,11 +60,12 @@ export default function EditRecipe ({ recipe, setRecipe }) {
                     <RatingInput name={ "Henry" } id={ "hRating" } value={ hRating } setValue={ setHRating } />
                 </fieldset>
 
-                <div className="w-full flex items-center justify-end">
-                    <button className="px-3 py-1 bg-neutral-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={e => {e.preventDefault()}}>
-                        CANCEL
+                <div className="w-full flex items-center justify-between">
+                    <button className="me-3 px-3 py-1 bg-red-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold " onClick={remove}>
+                        DELETE
                     </button>
-                    <button className="ms-3 px-3 py-1 bg-blue-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={submit}>
+
+                    <button className="px-3 py-1 bg-blue-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={submit}>
                         SUBMIT
                     </button>
                 </div>
