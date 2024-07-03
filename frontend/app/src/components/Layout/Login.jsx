@@ -1,5 +1,5 @@
 /** React imports */
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 /** User context import */
@@ -14,6 +14,15 @@ export default function Login () {
     const [password, setPassword] = useState(""); // Current password
     const [error, setError] = useState(false); // Track whether there was a login error
     const navigate = useNavigate(); // Navigation hook
+
+    // Redirect to the homepage if a user is already logged in
+    useEffect(() => {
+        api.getCurrentUser()
+            .then(res => {
+                setUser(res.user);
+                navigate("/")
+            });
+    }, []);
 
     // Use the API to log in with the given credentials and redirect to the index
     // page if successful
