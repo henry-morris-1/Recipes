@@ -6,10 +6,10 @@ import { useNavigate } from "react-router-dom"
 import api from "../../api/api";
 
 /**
- * Page for submitting a new recipe. Upon submission, the user is redirected
+ * Modal for submitting a new recipe. Upon submission, the user is redirected
  * to the page for the newly created recipe.
  */
-export default function () {
+export default function AddRecipe () {
     const navigate = useNavigate();
 
     // State variables for the form inputs
