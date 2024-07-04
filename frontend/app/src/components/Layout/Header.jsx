@@ -18,10 +18,6 @@ export default function Header ({ setUser }) {
     const navigate = useNavigate(); // Navigate hook
     const location = useLocation(); // Location hook
 
-    useEffect(() => {
-        console.log(location);
-    }, [location]);
-
     // Create an array of each item within the menu
     const menuItems = [
         {
