@@ -1,5 +1,5 @@
 /** React imports */
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 /** API import */
@@ -23,12 +23,18 @@ export default function EditRecipe ({ recipe, setRecipe }) {
 
     // State variable for whether to verify deletion
     const [verify, setVerify] = useState(false);
+    const verifyRef = useRef(null);
 
     // Set verify to true to display the deletion verification
     // buttons
     function handleVerify (event) {
         event.preventDefault();
         setVerify(true);
+
+        // Scroll to ensure it is seen
+        setTimeout(() => {
+            verifyRef.current.scrollIntoView({ behavior: "smooth", block: "start" });
+        }, 10);
     }
 
     // Set verify to false if NO is selected for deletion
@@ -100,7 +106,7 @@ export default function EditRecipe ({ recipe, setRecipe }) {
                             </div>
                         </>
                         :
-                        <div className="w-full">
+                        <div className="w-full" ref={verifyRef}>
                             <h3 className="text-2xl font-semibold leading-6 mb-1">Are you sure you want to delete this recipe?</h3>
                             <hr className="w-full border-t border-current mb-3" />
                             
