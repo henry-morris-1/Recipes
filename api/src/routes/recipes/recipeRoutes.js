@@ -82,4 +82,20 @@ router.put("/:recipeId", (req, res) => {
     });
 });
 
+/**
+ * Delete the recipe with the given id
+ */
+router.delete("/:recipeId", (req, res) => {
+    const recipeId = req.params.recipeId;
+
+    recipeDAO.deleteRecipe(recipeId).then(recipes => {
+        if (recipes) {
+            res.status(200).json(recipes);
+        } else {
+            res.status(404).json({ error: "Error deleting recipe" });
+        }
+    })
+});
+
+
 module.exports = router;

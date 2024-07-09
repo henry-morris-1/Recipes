@@ -84,6 +84,16 @@ const updateRecipe = (recipeId, recipe) => {
 }
 
 /**
+ * Deletes a recipe and all of its traces in the database.
+ * @param {Number} recipeId Recipe to delete
+ * @returns All remaining recipes
+ */
+const deleteRecipe = (recipeId) => {
+    const url = "/api/recipes/" + recipeId;
+    return HTTPClient.delete(url);
+}
+
+/**
  * Get all tags in the database.
  * @returns All tags
  */
@@ -131,6 +141,7 @@ const api = {
     getSimilarRecipes,
     addRecipe,
     updateRecipe,
+    deleteRecipe,
     getTags,
     getCalendar,
     addCalendarDays,

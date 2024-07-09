@@ -126,10 +126,24 @@ function updateRecipe (id, recipe) {
     });
 }
 
+/**
+ * Deletes the given recipe from the recipes table, as well as its tags.
+ * @param {Number} id ID of the recipe to delete
+ * @returns All remaining recipes
+ */
+function deleteRecipe (id) {
+    return db.query("DELETE FROM recipe_tags WHERE recipe_id_fk = ?", [id]).then(() => {
+        return db.query("DELETE FROM recipes WHERE recipe_id = ?", [id]).then(() => {
+            return getRecipes();
+        });
+    });
+}
+
 module.exports = {
     getRecipes: getRecipes,
     getRecipeById: getRecipeById,
     getSimilarRecipes: getSimilarRecipes,
     addRecipe: addRecipe,
-    updateRecipe: updateRecipe
+    updateRecipe: updateRecipe,
+    deleteRecipe: deleteRecipe
 };

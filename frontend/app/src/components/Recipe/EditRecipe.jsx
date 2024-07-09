@@ -42,7 +42,7 @@ export default function EditRecipe ({ recipe, setRecipe }) {
     function handleDelete (event) {
         event.preventDefault();
 
-        navigate("/recipes");
+        api.deleteRecipe(recipe.id).then(navigate("/recipes"));
     }
 
     // Handle submission by creating a new recipe object from the state variables, submitting
