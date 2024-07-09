@@ -1,5 +1,6 @@
 /** React imports */
 import { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 /** API import */
 import api from "../../api/api";
@@ -11,6 +12,8 @@ import api from "../../api/api";
  * @param {Function} setRecipe Function to set a new recipe
  */
 export default function EditRecipe ({ recipe, setRecipe }) {
+    const navigate = useNavigate();
+
     // State variables for the form inputs
     const [name, setName] = useState(recipe.name);
     const [tags, setTags] = useState([...recipe.tags]);
@@ -18,13 +21,33 @@ export default function EditRecipe ({ recipe, setRecipe }) {
     const [jRating, setJRating] = useState(recipe.jRating);
     const [hRating, setHRating] = useState(recipe.hRating);
 
-    function remove (event) {
+    // State variable for whether to verify deletion
+    const [verify, setVerify] = useState(false);
+
+    // Set verify to true to display the deletion verification
+    // buttons
+    function handleVerify (event) {
         event.preventDefault();
+        setVerify(true);
+    }
+
+    // Set verify to false if NO is selected for deletion
+    function handleUnverify (event) {
+        event.preventDefault();
+        setVerify(false);
+    }
+
+    // Delete the recipe and redirect back to the recipes page if
+    // YES is selected for deletion
+    function handleDelete (event) {
+        event.preventDefault();
+
+        navigate("/recipes");
     }
 
     // Handle submission by creating a new recipe object from the state variables, submitting
     // to the API, then updating the recipe and closing the modal.
-    function submit (event) {
+    function handleSubmit (event) {
         // Prevent default submission behavior
         event.preventDefault();
 
@@ -60,14 +83,37 @@ export default function EditRecipe ({ recipe, setRecipe }) {
                     <RatingInput name={ "Henry" } id={ "hRating" } value={ hRating } setValue={ setHRating } />
                 </fieldset>
 
-                <div className="w-full flex items-center justify-between">
-                    <button className="me-3 px-3 py-1 bg-red-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold " onClick={remove}>
-                        DELETE
-                    </button>
+                <div className="w-full flex items-center justify-between relative">
+                    {!verify ?
+                        <>
+                            <button className="px-3 py-1 bg-red-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold " onClick={handleVerify}>
+                                DELETE
+                            </button>
 
-                    <button className="px-3 py-1 bg-blue-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={submit}>
-                        SUBMIT
-                    </button>
+                            <div className="flex">
+                                <button className="px-3 py-1 mx-3 bg-neutral-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={e => { e.preventDefault() }}>
+                                    CANCEL
+                                </button>
+                                <button className="px-3 py-1 bg-blue-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={handleSubmit}>
+                                    SAVE
+                                </button>
+                            </div>
+                        </>
+                        :
+                        <div className="w-full">
+                            <h3 className="text-2xl font-semibold leading-6 mb-1">Are you sure you want to delete this recipe?</h3>
+                            <hr className="w-full border-t border-current mb-3" />
+                            
+                            <div className="flex justify-end w-full">
+                                <button className="px-3 py-1 me-3 bg-neutral-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold" onClick={handleUnverify}>
+                                    NO
+                                </button>
+                                <button className="px-3 py-1 bg-red-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={handleDelete}>
+                                    YES, DELETE IT
+                                </button>
+                            </div>
+                        </div>
+                    }
                 </div>
             </form>
         </div>
