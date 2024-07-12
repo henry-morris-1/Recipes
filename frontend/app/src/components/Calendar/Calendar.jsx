@@ -110,7 +110,7 @@ export default function Calendar () {
 
     return (
         <div className="m-2 mt-4">
-            <TabContainer className="bg-neutral-300 after:bg-neutral-300" title={ dateHeader }>
+            <TabContainer className="bg-neutral-300 after:bg-neutral-300 dark:bg-neutral-700 dark:after:bg-neutral-700 dark:text-white" title={ dateHeader }>
                 <Carousel currentSlide={ selectedWeek } setCurrentSlide={ setSelectedWeek } home={ currentWeek }>
                     {calendar && calendar.map((week, i) => (
                         <Table key={ i }>
@@ -137,7 +137,7 @@ function CalendarRow ({ day, today, recipes, formatCalendar }) {
     const date = new Date (new Date(day.date.replace(/-/g, "\/").replace(/T.+/, "")).setHours(0,0,0,0));
 
     return (
-        <TableRow className={(date.getTime() === today.getTime() && "bg-blue-300/50 shadow-neutral-300 shadow-[0.5em_0.5em_1em_0_inset,_-0.5em_-0.5em_1em_0_inset]")}>
+        <TableRow className={(date.getTime() === today.getTime() && "bg-blue-300/50 dark:bg-blue-600/50 shadow-neutral-300 dark:shadow-neutral-700 shadow-[0.5em_0.5em_1em_0_inset,_-0.5em_-0.5em_1em_0_inset]")}>
             <TableData>
                 {date.toLocaleDateString("en-US",{weekday: "short"})}
             </TableData>

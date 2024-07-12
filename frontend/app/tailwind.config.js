@@ -1,4 +1,4 @@
-/** @type {import('tailwindcss').Config} */
+/** @type { import("tailwindcss").Config } */
 export default {
   content: [
     "./index.html",
@@ -7,9 +7,9 @@ export default {
   theme: {
     extend: {},
     fontFamily: {
-      'sans': ["neue-kabel", "ui-sans-serif", "system-ui"],
-      'serif': ["freight-micro-pro", "ui-serif", "Georgia"],
-      'serif-header': ["freight-big-pro", "ui-serif", "Georgia"]
+      "sans": ["neue-kabel", "ui-sans-serif", "system-ui"],
+      "serif": ["freight-micro-pro", "ui-serif", "Georgia"],
+      "serif-header": ["freight-big-pro", "ui-serif", "Georgia"]
     }
   },
   plugins: [],

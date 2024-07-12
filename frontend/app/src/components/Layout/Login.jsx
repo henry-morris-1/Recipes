@@ -43,8 +43,8 @@ export default function Login () {
     }
 
     return (
-        <div className="fixed z-50 flex items-center justify-center text-left bg-neutral-100 modal open">
-            <div className="z-50 m-2 p-2 w-full sm:w-[39rem] max-h-fit rounded-3xl bg-neutral-900/50 backdrop-blur-2xl text-white">
+        <div className="fixed z-50 flex items-center justify-center text-left bg-neutral-100 dark:bg-neutral-900 modal open">
+            <div className="z-50 m-2 p-2 w-full sm:w-[39rem] max-h-fit rounded-3xl bg-neutral-900/50 dark:bg-neutral-600/50 backdrop-blur-2xl text-white">
                 <div className="flex flex-row items-center justify-center p-2">
                     <img src="/assets/wordmark.svg" className="sm:h-12 h-10" style={{filter: "invert(1) drop-shadow(0px 2px 3px #222)"}} alt="Recipes" />
                 </div>

@@ -16,7 +16,7 @@ export default function RecipeCard ({ recipe }) {
     }
 
     return (
-        <div className="flex flex-col justify-between p-4 bg-neutral-300 rounded-2xl">
+        <div className="flex flex-col justify-between p-4 bg-neutral-300 dark:bg-neutral-700 rounded-2xl">
             <Link to={"/recipes/" + recipe.id} className="flex items-center justify-between mb-1 text-[1.75rem] leading-[1.375rem] font-semibold">
                 <h4 className="me-3 font-serif-header">{recipe.name}</h4>
                 <RatingBadge rating={ recipe.avgRating } />

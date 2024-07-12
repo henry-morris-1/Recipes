@@ -44,7 +44,7 @@ export default forwardRef(function Modal ({ title, children }, ref) {
 
     return (
         <>{open && 
-            <div className="modal fixed z-50 flex p-2 text-left bg-neutral-200/50 overflow-scroll click-toggle open" ref={ modalRef } onClick={ toggleModal }>
+            <div className="modal fixed z-50 flex p-2 text-left bg-neutral-200/50 dark:bg-neutral-800/50 overflow-scroll click-toggle open" ref={ modalRef } onClick={ toggleModal }>
                 <div className="z-50 m-auto p-2 w-full sm:w-[39rem] max-h-fit rounded-3xl bg-neutral-900/50 backdrop-blur-2xl text-white">
                     <div className="flex flex-row items-center justify-between p-3">
                         <h1 className="text-3xl font-bold leading-7 me-2">{title}</h1>

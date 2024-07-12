@@ -47,7 +47,6 @@ export default function EditRecipe ({ recipe, setRecipe }) {
     // YES is selected for deletion
     function handleDelete (event) {
         event.preventDefault();
-
         api.deleteRecipe(recipe.id).then(navigate("/recipes"));
     }
 

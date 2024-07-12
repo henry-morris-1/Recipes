@@ -33,12 +33,11 @@ export default function Layout () {
 
     // Remove the lock class from the body whenever the page changes
     useEffect(() => {
-        document.body.classList.add("bg-neutral-100"); // Ensure the body's background matches
         document.body.classList.remove("lock");
     }, [location.key]);
 
     return (
-        <div className="bg-neutral-100 min-w-screen min-h-screen ">
+        <div className="bg-neutral-100 dark:bg-neutral-900 text-black dark:text-white min-w-screen min-h-screen ">
             <Header setUser={ setUser } />
             <main className="flex justify-center">
                 <div className="container">

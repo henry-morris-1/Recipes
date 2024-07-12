@@ -59,7 +59,7 @@ export default function Recipe () {
             {recipe && <>
                 <div className="flex items-center justify-between mt-4">
                     <div className="flex items-center">
-                        <h5 className="text-xl text-neutral-500 font-bold">#{recipe.id}</h5>
+                        <h5 className="text-xl text-neutral-500 dark:text-neutral-300 font-bold">#{recipe.id}</h5>
                         <h4 className="mx-3 font-serif-header text-4xl leading-[1.625rem] font-semibold">{recipe.name}</h4>
                     </div>
 
@@ -69,7 +69,7 @@ export default function Recipe () {
                 <p className="text-base mt-3 mb-4">{recipe.tags.join(", ")}</p>
                 
                 {ratingData && <>
-                    <TabContainer className=" bg-neutral-300 after:bg-neutral-300" title={ "Ratings" }>
+                    <TabContainer className="bg-neutral-300 after:bg-neutral-300 dark:bg-neutral-700 dark:after:bg-neutral-700 dark:text-white" title={ "Ratings" }>
                         {ratingData && <>
                             <Table>
                                 {ratingData.map((row, i) => (
@@ -97,7 +97,7 @@ export default function Recipe () {
             </>}
 
             {similarRecipes && similarRecipes.length > 0 && <div className="mt-6">
-                    <TabContainer className=" bg-neutral-300 after:bg-neutral-300" title={ "Similar recipes" }>
+                    <TabContainer className="bg-neutral-300 after:bg-neutral-300 dark:bg-neutral-700 dark:after:bg-neutral-700 dark:text-white" title={ "Similar recipes" }>
                         <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
                             {similarRecipes && similarRecipes.map((recipe, i) => (
                                 <div className="border border-current rounded-2xl" key={ i }>
