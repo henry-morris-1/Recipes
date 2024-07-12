@@ -67,15 +67,13 @@ export default function RecipeList () {
 
     return (
         <div className="m-2">
-            <div className="flex flex-wrap items-center justify-between mb-5">
+            <div className="flex flex-wrap items-center justify-between my-4">
                 <div className="flex items-center">
-                    <h1 className="my-2 py-1 text-4xl leading-7 uppercase font-bold">Recipes</h1>
-
                     <AddRecipeModal />
                 </div>
 
                 <MenuButton menuRef={ menuRef }>
-                    <i className="material-symbols-outlined text-3xl pointer-events-none icon-thick">filter_list</i>
+                    <i className="material-symbols-outlined text-2xl px-1 pointer-events-none icon-thick">filter_list</i>
                 </MenuButton>
             </div>
 
@@ -102,13 +100,14 @@ function AddRecipeModal () {
 
     return (
         <>
-            <Modal title={"Add a Recipe"} ref={modalRef}>
+            <Modal title={"Add a recipe"} ref={modalRef}>
                 <AddRecipe />
             </Modal>
 
             <ModalButton modalRef={modalRef}>
-                <button className="flex items-center mx-3 p-[0.025em] rounded-full bg-green-600 text-white click-toggle">
-                    <i className="material-symbols-outlined text-[1.25em] click-toggle">add</i>
+                <button className="flex items-center me-3 ps-2 pe-3 py-1 rounded-full bg-green-600 text-lg text-white click-toggle">
+                    <i className="material-symbols-outlined text-[1.25em] me-1 click-toggle">add</i>
+                    Add a recipe
                 </button>
             </ModalButton>
         </>

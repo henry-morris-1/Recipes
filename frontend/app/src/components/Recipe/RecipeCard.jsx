@@ -25,14 +25,14 @@ export default function RecipeCard ({ recipe }) {
             <div>
                 {recipe.history.length > 0 && <>
                     <hr className="border-t border-current my-2" />
-                    <h6 className="">
+                    <h6 className="font-serif">
                         Last eaten {formatDate(recipe.history.slice(-1)[0])}
                     </h6>
                 </>}
 
                 {recipe.tags.length > 0 && <>
                     <hr className="border-t border-current my-2" />
-                    <p className="">{recipe.tags.join(', ')}</p>
+                    <p className="font-serif">{recipe.tags.join(', ')}</p>
                 </>}
             </div>
             

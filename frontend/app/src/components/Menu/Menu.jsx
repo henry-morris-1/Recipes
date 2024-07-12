@@ -37,7 +37,7 @@ export default forwardRef(function Menu ({ children }, ref) {
             <div className="sm:w-96 w-1/2 p-2">
                 <div className="h-full flex flex-col p-2 rounded-3xl bg-neutral-900/50 backdrop-blur-2xl text-white">
                     <div className="flex flex-row-reverse">
-                        <i role="button" className="material-symbols-outlined p-3 text-3xl icon-medium click-toggle">close</i>
+                        <i role="button" className="material-symbols-outlined p-3 text-3xl icon-thick click-toggle">close</i>
                     </div>
 
                     {children}

@@ -110,10 +110,6 @@ export default function Calendar () {
 
     return (
         <div className="m-2">
-            <div className="flex items-center justify-between mb-5">
-                <h1 className="my-2 py-1 text-4xl leading-7 uppercase font-bold">Calendar</h1>
-            </div>
-
             <TabContainer className="bg-neutral-300 after:bg-neutral-300" title={ dateHeader }>
                 <Carousel currentSlide={ selectedWeek } setCurrentSlide={ setSelectedWeek } home={ currentWeek }>
                     {calendar && calendar.map((week, i) => (

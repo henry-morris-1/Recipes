@@ -6,6 +6,11 @@ export default {
   ],
   theme: {
     extend: {},
+    fontFamily: {
+      'sans': ["neue-kabel", "ui-sans-serif", "system-ui"],
+      'serif': ["freight-micro-pro", "ui-serif", "Georgia"],
+      'serif-header': ["freight-big-pro", "ui-serif", "Georgia"]
+    }
   },
   plugins: [],
 }

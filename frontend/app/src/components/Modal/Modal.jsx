@@ -48,7 +48,7 @@ export default forwardRef(function Modal ({ title, children }, ref) {
                 <div className="z-50 m-auto p-2 w-full sm:w-[39rem] max-h-fit rounded-3xl bg-neutral-900/50 backdrop-blur-2xl text-white">
                     <div className="flex flex-row items-center justify-between p-3">
                         <h1 className="text-3xl font-bold leading-7 me-2">{title}</h1>
-                        <i role="button" className="material-symbols-outlined text-3xl icon-medium click-toggle">close</i>
+                        <i role="button" className="material-symbols-outlined text-3xl icon-thick click-toggle">close</i>
                     </div>
                     
                     <div className="p-3">
