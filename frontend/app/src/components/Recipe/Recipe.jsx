@@ -57,7 +57,7 @@ export default function Recipe () {
     return (
         <div className="m-2">
             {recipe && <>
-                <div className="flex items-center justify-between">
+                <div className="flex items-center justify-between mt-4">
                     <div className="flex items-center">
                         <h5 className="text-xl text-neutral-500 font-bold">#{recipe.id}</h5>
                         <h4 className="mx-3 font-serif-header text-4xl leading-[1.625rem] font-semibold">{recipe.name}</h4>
