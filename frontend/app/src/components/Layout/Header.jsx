@@ -73,7 +73,7 @@ export default function Header ({ setUser }) {
     }
 
     return (
-        <header className="flex justify-center bg-neutral-100/85 border-b border-current sticky top-0 z-50">
+        <header className="flex justify-center bg-neutral-100 border-b border-current sticky top-0 z-50">
             <div className="container relative flex items-center justify-center p-2">
                 <div className="absolute left-0">{(location.key !== "default" && !(location.state && location.state.from === "/login")) && <>
                     <Link to={-1} className="flex items-center py-1 px-3">

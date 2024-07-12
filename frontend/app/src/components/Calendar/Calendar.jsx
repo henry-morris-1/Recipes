@@ -109,7 +109,7 @@ export default function Calendar () {
     }
 
     return (
-        <div className="m-2">
+        <div className="m-2 mt-4">
             <TabContainer className="bg-neutral-300 after:bg-neutral-300" title={ dateHeader }>
                 <Carousel currentSlide={ selectedWeek } setCurrentSlide={ setSelectedWeek } home={ currentWeek }>
                     {calendar && calendar.map((week, i) => (

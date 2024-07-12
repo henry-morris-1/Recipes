@@ -57,10 +57,10 @@ export default function Recipe () {
     return (
         <div className="m-2">
             {recipe && <>
-                <div className="flex items-center justify-between text-4xl leading-8 font-bold">
+                <div className="flex items-center justify-between">
                     <div className="flex items-center">
-                        <h5 className="text-xl text-neutral-500">#{recipe.id}</h5>
-                        <h4 className="mx-3 uppercase">{recipe.name}</h4>
+                        <h5 className="text-xl text-neutral-500 font-bold">#{recipe.id}</h5>
+                        <h4 className="mx-3 font-serif-header text-4xl leading-[1.625rem] font-semibold">{recipe.name}</h4>
                     </div>
 
                     <EditRecipeModal recipe={ recipe } setRecipe={ setRecipe } />

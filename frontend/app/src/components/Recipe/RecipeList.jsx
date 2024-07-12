@@ -73,7 +73,7 @@ export default function RecipeList () {
                 </div>
 
                 <MenuButton menuRef={ menuRef }>
-                    <i className="material-symbols-outlined text-2xl px-1 pointer-events-none icon-thick">filter_list</i>
+                    <i className="material-symbols-outlined text-3xl px-1 pointer-events-none icon-thick">filter_list</i>
                 </MenuButton>
             </div>
 
