@@ -60,7 +60,7 @@ export function MenuButton ({ children, menuRef }) {
     }
 
     return (
-        <button className="flex items-center my-2 px-2 py-1 border border-current rounded-3xl click-toggle" onClick={handleClick}>
+        <button className="flex items-center click-toggle" onClick={handleClick}>
             {children}
         </button>
     );

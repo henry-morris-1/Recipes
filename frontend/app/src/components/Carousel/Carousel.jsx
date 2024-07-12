@@ -51,18 +51,16 @@ function CarouselControls ({ currentSlide, setCurrentSlide, home, max }) {
 
     return (
         <div className="flex justify-between py-4 border-b border-current">
-            <button className="flex items-center px-2 py-1 bg-black text-white mix-blend-multiply rounded-3xl disabled:invisible" disabled={currentSlide === 0} onClick={prevSlide}>
-                <i className="material-symbols-outlined me-1 pointer-events-none icon-medium">arrow_back</i>
-                PREV
+            <button className="flex items-center px-2 rounded-3xl disabled:invisible" disabled={currentSlide === 0} onClick={prevSlide}>
+                <i className="material-symbols-outlined text-3xl pointer-events-none icon-thick">arrow_back</i>
             </button>
 
-            <button className="flex items-center px-2 py-1 bg-black text-white mix-blend-multiply rounded-3xl disabled:invisible" disabled={!home || currentSlide === home} onClick={homeSlide}>
-                <i className="material-symbols-outlined pointer-events-none icon-medium">home</i>
+            <button className="flex items-center px-2 rounded-3xl disabled:invisible" disabled={!home || currentSlide === home} onClick={homeSlide}>
+                <i className="material-symbols-outlined text-3xl pointer-events-none icon-thick">home</i>
             </button>
 
-            <button className="flex items-center px-2 py-1 bg-black text-white mix-blend-multiply rounded-3xl disabled:invisible" disabled={currentSlide >= max} onClick={nextSlide}>
-                NEXT
-                <i className="material-symbols-outlined ms-1 pointer-events-none icon-medium">arrow_forward</i>
+            <button className="flex items-center px-2 rounded-3xl disabled:invisible" disabled={currentSlide >= max} onClick={nextSlide}>
+                <i className="material-symbols-outlined text-3xl pointer-events-none icon-thick">arrow_forward</i>
             </button>
         </div>
     );

@@ -76,15 +76,15 @@ export default function Header ({ setUser }) {
         <header className="flex justify-center">
             <div className="container relative flex items-center justify-between p-2">
                 <div>{(location.key !== "default" && !(location.state && location.state.from === "/login")) && <>
-                    <Link to={-1} className="flex items-center my-2 px-2 py-1">
-                        <i className="material-symbols-outlined me-1 pointer-events-none icon-medium">arrow_back</i>
-                        BACK
+                    <Link to={-1} className="flex items-center py-1 pe-3">
+                        <i className="material-symbols-outlined text-3xl pointer-events-none icon-thick">arrow_back</i>
                     </Link>
                 </>}</div>
 
+                <img src="/assets/wordmark.svg" className="sm:h-12 h-10" alt="Recipes" />
+
                 <MenuButton menuRef={ menuRef }>
-                    MENU
-                    <i className="material-symbols-outlined ms-1 pointer-events-none icon-medium">menu</i>
+                    <i className="material-symbols-outlined py-1 ps-3 text-3xl pointer-events-none icon-thick">menu</i>
                 </MenuButton>
             </div>
 

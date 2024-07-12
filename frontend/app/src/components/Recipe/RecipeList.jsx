@@ -75,8 +75,7 @@ export default function RecipeList () {
                 </div>
 
                 <MenuButton menuRef={ menuRef }>
-                    FILTERS
-                    <i className="material-symbols-outlined ms-1 pointer-events-none icon-medium">filter_list</i>
+                    <i className="material-symbols-outlined text-3xl pointer-events-none icon-thick">filter_list</i>
                 </MenuButton>
             </div>
 
