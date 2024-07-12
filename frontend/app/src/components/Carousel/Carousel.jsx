@@ -56,7 +56,7 @@ function CarouselControls ({ currentSlide, setCurrentSlide, home, max }) {
             </button>
 
             <button className="flex items-center px-2 rounded-3xl disabled:invisible" disabled={!home || currentSlide === home} onClick={homeSlide}>
-                <i className="material-symbols-outlined text-3xl pointer-events-none icon-thick">home</i>
+                <i className="material-symbols-outlined text-3xl pointer-events-none icon-thick">history</i>
             </button>
 
             <button className="flex items-center px-2 rounded-3xl disabled:invisible" disabled={currentSlide >= max} onClick={nextSlide}>
