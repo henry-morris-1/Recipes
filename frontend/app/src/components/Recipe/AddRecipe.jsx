@@ -58,11 +58,11 @@ export default function AddRecipe () {
                 </fieldset>
 
                 <div className="w-full flex items-center justify-end">
-                    <button className="px-3 py-1 bg-neutral-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={e => {e.preventDefault()}}>
-                        CANCEL
+                    <button className="px-3 py-1 bg-neutral-600 shadow-md rounded-3xl select-none text-sm font-semibold click-toggle" onClick={e => {e.preventDefault()}}>
+                        Cancel
                     </button>
-                    <button className="ms-3 px-3 py-1 bg-blue-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold" onClick={submit}>
-                        SUBMIT
+                    <button className="ms-3 px-3 py-1 bg-blue-600 shadow-md rounded-3xl select-none text-sm font-semibold" onClick={submit}>
+                        Submit
                     </button>
                 </div>
             </form>
@@ -141,7 +141,7 @@ function TagsInput ({tags, setTags}) {
                     <span 
                     key={ i }
                     role="button"
-                    className={"inline m-1 px-3 py-1 rounded-full shadow-md select-none text-sm uppercase font-semibold " + (tags.includes(tag) ? "bg-blue-600" : "bg-neutral-600")}
+                    className={"inline m-1 px-3 py-1 rounded-full shadow-md select-none text-sm font-semibold " + (tags.includes(tag) ? "bg-blue-600" : "bg-neutral-600")}
                     onClick={toggleTag}>
                         {tag}
                     </span>

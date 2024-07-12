@@ -168,7 +168,7 @@ export function FilterList({ filters, setFilters }) {
                     <span 
                     key={ i }
                     role="button"
-                    className={"inline m-1 px-3 py-1 rounded-full shadow-md select-none text-sm uppercase font-semibold " + (filters.includes(tag) ? "bg-blue-600" : "bg-neutral-600")}
+                    className={"inline m-1 px-3 py-1 rounded-full shadow-md select-none text-sm font-semibold " + (filters.includes(tag) ? "bg-blue-600" : "bg-neutral-600")}
                     onClick={toggleFilter}>
                         {tag}
                     </span>

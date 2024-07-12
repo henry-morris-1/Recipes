@@ -92,16 +92,16 @@ export default function EditRecipe ({ recipe, setRecipe }) {
                 <div className="w-full flex items-center justify-between relative">
                     {!verify ?
                         <>
-                            <button className="px-3 py-1 bg-red-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold " onClick={handleVerify}>
-                                DELETE
+                            <button className="px-3 py-1 bg-red-600 shadow-md rounded-3xl select-none text-sm font-semibold " onClick={handleVerify}>
+                                Delete
                             </button>
 
                             <div className="flex">
-                                <button className="px-3 py-1 mx-3 bg-neutral-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={e => { e.preventDefault() }}>
-                                    CANCEL
+                                <button className="px-3 py-1 mx-3 bg-neutral-600 shadow-md rounded-3xl select-none text-sm font-semibold click-toggle" onClick={e => { e.preventDefault() }}>
+                                    Cancel
                                 </button>
-                                <button className="px-3 py-1 bg-blue-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={handleSubmit}>
-                                    SAVE
+                                <button className="px-3 py-1 bg-blue-600 shadow-md rounded-3xl select-none text-sm font-semibold click-toggle" onClick={handleSubmit}>
+                                    Save
                                 </button>
                             </div>
                         </>
@@ -111,11 +111,11 @@ export default function EditRecipe ({ recipe, setRecipe }) {
                             <hr className="w-full border-t border-current mb-3" />
                             
                             <div className="flex justify-end w-full">
-                                <button className="px-3 py-1 me-3 bg-neutral-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold" onClick={handleUnverify}>
-                                    NO
+                                <button className="px-3 py-1 me-3 bg-neutral-600 shadow-md rounded-3xl select-none text-sm font-semibold" onClick={handleUnverify}>
+                                    No
                                 </button>
-                                <button className="px-3 py-1 bg-red-600 shadow-md rounded-3xl select-none text-sm uppercase font-semibold click-toggle" onClick={handleDelete}>
-                                    YES, DELETE IT
+                                <button className="px-3 py-1 bg-red-600 shadow-md rounded-3xl select-none text-sm font-semibold click-toggle" onClick={handleDelete}>
+                                    Yes, delete it
                                 </button>
                             </div>
                         </div>
@@ -197,7 +197,7 @@ function TagsInput ({tags, setTags}) {
                     <span 
                     key={ i }
                     role="button"
-                    className={"inline m-1 px-3 py-1 rounded-full shadow-md select-none text-sm uppercase font-semibold " + (tags.includes(tag) ? "bg-blue-600" : "bg-neutral-600")}
+                    className={"inline m-1 px-3 py-1 rounded-full shadow-md select-none text-sm font-semibold " + (tags.includes(tag) ? "bg-blue-600" : "bg-neutral-600")}
                     onClick={toggleTag}>
                         {tag}
                     </span>
