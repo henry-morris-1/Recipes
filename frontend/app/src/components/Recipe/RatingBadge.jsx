@@ -19,13 +19,13 @@ export default function RatingBadge ({ rating }) {
     }
 
     return (
-        <div className="flex items-center justify-center h-[1.75em] aspect-square rounded-full" style={{backgroundColor: getColor()}}>
+        <div className="flex items-center justify-center h-[1.75em] aspect-square rounded-full font-bold" style={{backgroundColor: getColor()}}>
             {rating === 0 ?
-                <span className="text-white" style={{fontSize: "0.65em"}}>
+                <span className="text-white text-[0.65em]">
                     TBD
                 </span>
                 :
-                <span className="text-white" style={{fontSize: "0.75em"}}>
+                <span className="text-white text-[0.75em]">
                     {parseFloat(rating.toFixed(1))}
                 </span>
             }
