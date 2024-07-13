@@ -54,15 +54,15 @@ export default function Header ({ setUser }) {
                 <Menu ref={ menuRef }>
                     <div>
                         {menuItems.map((item, i) => (
-                            <Link to={item.link} key={ i } className="flex items-center p-3 text-3xl font-medium click-toggle">
-                                <i className="material-symbols-outlined me-3 text-3xl icon-medium">{item.icon}</i>
+                            <Link to={item.link} key={ i } className="flex items-center p-3 text-3xl font-bold click-toggle">
+                                <i className="material-symbols-outlined me-3 text-3xl icon-thick">{item.icon}</i>
                                 {item.text}
                             </Link>
                         ))}
                     </div>
 
                     <div className="flex flex-col justify-end mt-auto">
-                        <button className="m-3 flex items-center justify-center p-3 bg-neutral-600 rounded-full text-lg font-medium" onClick={logout}>
+                        <button className="m-3 flex items-center justify-center p-3 bg-neutral-600 rounded-full text-lg font-semibold" onClick={logout}>
                             <i className="material-symbols-outlined me-3 text-[1.25em] icon-thick">logout</i>
                             Logout
                         </button>
