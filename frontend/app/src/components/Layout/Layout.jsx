@@ -55,7 +55,7 @@ export default function Layout () {
             <Header setUser={ setUser } />
             <main className="flex justify-center">
                 <div className="container">
-                    <div ref={ loaderRef }>
+                    <div className="opacity-50" ref={ loaderRef }>
                         <Loader />
                     </div>
                 
