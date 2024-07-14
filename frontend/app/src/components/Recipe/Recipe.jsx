@@ -1,9 +1,12 @@
 /** React imports */
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
 import { useParams } from "react-router-dom";
 
 /** API import */
 import api from "../../api/api";
+
+/** Import loader context */
+import { LoaderContext } from "../Layout/Layout";
 
 /** Component imports */
 import RatingBadge from "./RatingBadge";
@@ -31,7 +34,7 @@ export default function Recipe () {
     }, [id]);
 
     // Get similar recipes from the API
-    const [similarRecipes, setSimilarRecipes] = useState([]);
+    const [similarRecipes, setSimilarRecipes] = useState(null);
     useEffect(() => {
         api.getSimilarRecipes(id).then(response => {
             setSimilarRecipes(response);
@@ -54,9 +57,19 @@ export default function Recipe () {
         }
     }, [recipe]);
 
+    // Hide the component until loaded
+    const handleLoad = useContext(LoaderContext);
+    const [isLoaded, setIsLoaded] = useState(false);
+    useEffect(() => {
+        if (recipe && ratingData && similarRecipes) {
+            handleLoad();
+            setIsLoaded(true);
+        }
+    }, [recipe, ratingData, similarRecipes]);
+
     return (
         <div className="m-2">
-            {recipe && <>
+            {isLoaded && <>
                 <div className="flex items-center justify-between mt-4">
                     <div className="flex items-center">
                         <h5 className="text-xl text-neutral-500 dark:text-neutral-300 font-bold">#{recipe.id}</h5>
@@ -68,46 +81,41 @@ export default function Recipe () {
 
                 <p className="text-base mt-3 mb-4">{recipe.tags.join(", ")}</p>
                 
-                {ratingData && <>
-                    <TabContainer className="bg-neutral-300 after:bg-neutral-300 dark:bg-neutral-700 dark:after:bg-neutral-700 dark:text-white" title={ "Ratings" }>
-                        {ratingData && <>
-                            <Table>
-                                {ratingData.map((row, i) => (
-                                    <TableRow key={ i }>
-                                        {row.map((value, j) => (
-                                            <TableData className="even:px-[1.75em]" key={ j }>
-                                                {value}
-                                            </TableData>
-                                        ))}
-                                    </TableRow>
+                <TabContainer className="bg-neutral-300 after:bg-neutral-300 dark:bg-neutral-700 dark:after:bg-neutral-700 dark:text-white" title={ "Ratings" }>
+                    <Table>
+                        {ratingData.map((row, i) => (
+                            <TableRow key={ i }>
+                                {row.map((value, j) => (
+                                    <TableData className="even:px-[1.75em]" key={ j }>
+                                        {value}
+                                    </TableData>
                                 ))}
+                            </TableRow>
+                        ))}
 
-                                <TableRow>
-                                    <TableData>
-                                        Avg.
-                                    </TableData>
-                                    <TableData className="text-2xl font-bold py-0">
-                                        <RatingBadge rating={ recipe.avgRating } />
-                                    </TableData>
-                                </TableRow>
-                            </Table>
-                        </>}
-                    </TabContainer>
-                </>}
-            </>}
+                        <TableRow>
+                            <TableData>
+                                Avg.
+                            </TableData>
+                            <TableData className="text-2xl font-bold py-0">
+                                <RatingBadge rating={ recipe.avgRating } />
+                            </TableData>
+                        </TableRow>
+                    </Table>
+                </TabContainer>
 
-            {similarRecipes && similarRecipes.length > 0 && <div className="mt-6">
+                {similarRecipes && similarRecipes.length > 0 && <div className="mt-6">
                     <TabContainer className="bg-neutral-300 after:bg-neutral-300 dark:bg-neutral-700 dark:after:bg-neutral-700 dark:text-white" title={ "Similar recipes" }>
                         <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                            {similarRecipes && similarRecipes.map((recipe, i) => (
+                            {similarRecipes.map((recipe, i) => (
                                 <div className="border border-current rounded-2xl" key={ i }>
                                     <RecipeCard recipe={ recipe } />
                                 </div>
                             ))}
                         </div>
                     </TabContainer>
-
-            </div>}
+                </div>}
+            </>}
         </div>
     );
 }
