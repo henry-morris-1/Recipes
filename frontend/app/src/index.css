@@ -17,47 +17,26 @@
     font-variation-settings: 'FILL' 1, 'wght' 700, 'GRAD' 0, 'opsz' 48;
 }
 
-/*
- *  Loader animations
+/* 
+ *  Scrolling loader animations
  */
-.loader.pan {
-    animation: pan 0.9s ease infinite;
+.loader.scroller {
+    animation: scroll 1.125s ease-in-out infinite;
 }
 
-.loader.block.one {
-    animation: blockOne 0.9s ease infinite;
+@keyframes scroll {
+    0% { left: -50% }
+    100% { left: 100% }
 }
 
-.loader.block.two {
-    animation: blockTwo 0.9s ease infinite;
+.loader {
+    transition: 0.5s ease;
 }
 
-.loader.block.three {
-    animation: blockThree 0.9s ease infinite;
-}
-
-@keyframes pan {
-    0% { transform: translateX(-15%) translateY(-25%) rotateZ(22.5deg); }
-    50% { transform: translateX(15%) translateY(25%) rotateZ(-22.5deg); }
-    100% { transform: translateX(-15%) translateY(-25%) rotateZ(22.5deg); }
-}
-
-@keyframes blockOne {
-    0% { transform: translateX(-100%) translateY(-400%) rotateZ(0deg); }
-    50% { transform: translateX(200%) translateY(400%) rotateZ(90deg); }
-    100% { transform: translateX(-100%) translateY(-400%) rotateZ(180deg); }
-}
-
-@keyframes blockTwo {
-    0% { transform: translateX(-100%) translateY(-400%) rotateZ(0deg); }
-    50% { transform: translateX(100%) translateY(350%) rotateZ(-90deg); }
-    100% { transform: translateX(-100%) translateY(-400%) rotateZ(-180deg); }
-}
-
-@keyframes blockThree {
-    0% { transform: translateX(-150%) translateY(-300%) rotateZ(0deg); }
-    50% { transform: translateX(100%) translateY(225%) rotateZ(90deg); }
-    100% { transform: translateX(-150%) translateY(-300%) rotateZ(180deg); }
+.loader.hide {
+    transform: scaleY(0);
+    transform-origin: top;
+    transition: 0.5s ease;
 }
 
 /* 
@@ -75,6 +54,13 @@
     opacity: 1;
     pointer-events: all;
     transition: inset 0.3s ease, opacity 0.2s ease;
+}
+
+/*
+ *  Page fade in animation
+ */
+ .page {
+    animation: fadeIn 0.25s ease;
 }
 
 /* 
@@ -105,13 +91,6 @@
  */
 body.lock {
     overflow: hidden;
-}
-
-/*
- *  Page fade in animation
- */
-.page {
-    animation: fadeIn 0.25s ease;
 }
 
 /* 

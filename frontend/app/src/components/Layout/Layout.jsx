@@ -42,12 +42,12 @@ export default function Layout () {
         document.body.classList.remove("lock");
 
         // Show the loader when the page changes
-        loaderRef.current && loaderRef.current.classList.remove("hidden");
+        loaderRef.current && loaderRef.current.classList.remove("hide");
     }, [location.key]);
 
     // Function called within child components to hide the loader
     function handleLoad () {
-        loaderRef.current && loaderRef.current.classList.add("hidden");
+        loaderRef.current && loaderRef.current.classList.add("hide");
     }
 
     return (
@@ -55,10 +55,10 @@ export default function Layout () {
             <Header setUser={ setUser } />
             <main className="flex justify-center">
                 <div className="container">
-                    <div className="opacity-50" ref={ loaderRef }>
+                    <div className="loader c" ref={ loaderRef }>
                         <Loader />
                     </div>
-                
+
                     <LoaderContext.Provider value={ handleLoad }>
                         <Outlet />
                     </LoaderContext.Provider>
