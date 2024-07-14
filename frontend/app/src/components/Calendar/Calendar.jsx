@@ -122,7 +122,7 @@ export default function Calendar () {
     }, [calendar]);
 
     return (
-        <div className="m-2 mt-4">
+        <div className="m-2 mt-4 page">
             {isLoaded && <>
                 <TabContainer className="bg-neutral-300 after:bg-neutral-300 dark:bg-neutral-700 dark:after:bg-neutral-700 dark:text-white" title={ dateHeader }>
                     <Carousel currentSlide={ selectedWeek } setCurrentSlide={ setSelectedWeek } home={ currentWeek }>

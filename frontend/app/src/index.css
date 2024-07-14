@@ -107,6 +107,13 @@ body.lock {
     overflow: hidden;
 }
 
+/*
+ *  Page fade in animation
+ */
+.page {
+    animation: fadeIn 0.25s ease;
+}
+
 /* 
  *  Radio buttons
  */

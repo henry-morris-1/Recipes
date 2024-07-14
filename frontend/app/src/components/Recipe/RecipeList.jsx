@@ -79,7 +79,7 @@ export default function RecipeList () {
     const menuRef = useRef(null);
 
     return (
-        <div className="m-2">
+        <div className="m-2 page">
             {isLoaded && <>
                 <div className="flex flex-wrap items-center justify-between my-4">
                     <div className="flex items-center">

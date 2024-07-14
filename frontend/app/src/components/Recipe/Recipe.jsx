@@ -68,7 +68,7 @@ export default function Recipe () {
     }, [recipe, ratingData, similarRecipes]);
 
     return (
-        <div className="m-2">
+        <div className="m-2 page">
             {isLoaded && <>
                 <div className="flex items-center justify-between mt-4">
                     <div className="flex items-center">
