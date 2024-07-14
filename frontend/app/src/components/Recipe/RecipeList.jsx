@@ -1,8 +1,11 @@
 /** React imports */
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 
 /** Import the recipe API */
 import api from "../../api/api";
+
+/** Import loader context */
+import { LoaderContext } from "../Layout/Layout";
 
 /** Import components */
 import Menu from "../Menu/Menu";
@@ -62,32 +65,44 @@ export default function RecipeList () {
         return newFilteredRecipes;
     }, [recipes, filters, sort]);
 
+    // Hide the component until loaded
+    const handleLoad = useContext(LoaderContext);
+    const [isLoaded, setIsLoaded] = useState(false);
+    useEffect(() => {
+        if (filteredRecipes && filteredRecipes.length > 0) {
+            handleLoad();
+            setIsLoaded(true);
+        }
+    }, [filteredRecipes]);
+
     // Get a reference to the filters menu
     const menuRef = useRef(null);
 
     return (
         <div className="m-2">
-            <div className="flex flex-wrap items-center justify-between my-4">
-                <div className="flex items-center">
-                    <AddRecipeModal />
+            {isLoaded && <>
+                <div className="flex flex-wrap items-center justify-between my-4">
+                    <div className="flex items-center">
+                        <AddRecipeModal />
+                    </div>
+
+                    <MenuButton menuRef={ menuRef }>
+                        <i className="material-symbols-outlined text-3xl px-1 pointer-events-none icon-thick">filter_list</i>
+                    </MenuButton>
                 </div>
 
-                <MenuButton menuRef={ menuRef }>
-                    <i className="material-symbols-outlined text-3xl px-1 pointer-events-none icon-thick">filter_list</i>
-                </MenuButton>
-            </div>
-
-            <Menu ref={ menuRef }>
-                <SortSelection setSort={ setSort } />
-                <hr className="border-t border-white m-3" />
-                <FilterList filters={ filters } setFilters={ setFilters } />
-            </Menu>
-            
-            <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
-                {filteredRecipes && filteredRecipes.map((recipe, i) => (
-                    <RecipeCard recipe={ recipe } key={ i } />
-                ))}
-            </div>
+                <Menu ref={ menuRef }>
+                    <SortSelection setSort={ setSort } />
+                    <hr className="border-t border-white m-3" />
+                    <FilterList filters={ filters } setFilters={ setFilters } />
+                </Menu>
+                
+                <div className="gap-3 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3">
+                    {filteredRecipes && filteredRecipes.map((recipe, i) => (
+                        <RecipeCard recipe={ recipe } key={ i } />
+                    ))}
+                </div>
+            </>}
         </div>
     );
 }

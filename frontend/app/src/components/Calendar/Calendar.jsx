@@ -1,9 +1,12 @@
 /** React imports */
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Link } from "react-router-dom";
 
 /** API import */
 import api from "../../api/api"
+
+/** Import loader context */
+import { LoaderContext } from "../Layout/Layout";
 
 /** Component imports */
 import Carousel from "../Carousel/Carousel";
@@ -108,19 +111,31 @@ export default function Calendar () {
         }
     }
 
+    // Hide the component until loaded
+    const handleLoad = useContext(LoaderContext);
+    const [isLoaded, setIsLoaded] = useState(false);
+    useEffect(() => {
+        if (calendar && calendar.length > 0) {
+            handleLoad();
+            setIsLoaded(true);
+        }
+    }, [calendar]);
+
     return (
         <div className="m-2 mt-4">
-            <TabContainer className="bg-neutral-300 after:bg-neutral-300 dark:bg-neutral-700 dark:after:bg-neutral-700 dark:text-white" title={ dateHeader }>
-                <Carousel currentSlide={ selectedWeek } setCurrentSlide={ setSelectedWeek } home={ currentWeek }>
-                    {calendar && calendar.map((week, i) => (
-                        <Table key={ i }>
-                            {week.map((day, j) => (
-                                <CalendarRow day={ day } today={ today } recipes={ recipes } formatCalendar={ formatCalendar } key={ j } />
-                            ))}
-                        </Table>
-                    ))}
-                </Carousel>
-            </TabContainer>
+            {isLoaded && <>
+                <TabContainer className="bg-neutral-300 after:bg-neutral-300 dark:bg-neutral-700 dark:after:bg-neutral-700 dark:text-white" title={ dateHeader }>
+                    <Carousel currentSlide={ selectedWeek } setCurrentSlide={ setSelectedWeek } home={ currentWeek }>
+                        {calendar && calendar.map((week, i) => (
+                            <Table key={ i }>
+                                {week.map((day, j) => (
+                                    <CalendarRow day={ day } today={ today } recipes={ recipes } formatCalendar={ formatCalendar } key={ j } />
+                                ))}
+                            </Table>
+                        ))}
+                    </Carousel>
+                </TabContainer>
+            </>}
         </div>
     );
 }
