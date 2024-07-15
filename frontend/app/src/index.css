@@ -141,7 +141,7 @@ input[type=number] {
     bottom: 0;
     left: 100%;
     aspect-ratio: 1 / 1;
-    mask-image: url("https://cdn2.bustle.com/2024/inverse/tab-7b15135b56.svg");
+    mask-image: url("/assets/tab.svg");
     mask-size: 100% 100%;
     mask-position: center;
     mask-repeat: no-repeat;

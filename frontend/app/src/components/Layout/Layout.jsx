@@ -55,7 +55,7 @@ export default function Layout () {
             <Header setUser={ setUser } />
             <main className="flex justify-center">
                 <div className="container">
-                    <div className="loader c" ref={ loaderRef }>
+                    <div className="loader" ref={ loaderRef }>
                         <Loader />
                     </div>
 
