@@ -43,7 +43,7 @@ export default function Layout () {
 
         // Show the loader when the page changes
         loaderRef.current && loaderRef.current.classList.remove("hide");
-    }, [location.key]);
+    }, [location.pathname]);
 
     // Function called within child components to hide the loader
     function handleLoad () {
