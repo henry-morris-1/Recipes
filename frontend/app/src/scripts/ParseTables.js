@@ -24,15 +24,21 @@ fs.readFile("Recipes.tsv", function (err, data) {
     lines.forEach(line => {
         let split = line.split("\t");
 
-        let tags = [];
+        let rTags = [];
         split[2].split(",").forEach(tag => {
-            tags.push(tag.trim().replace(/\"/ig, ""));
+            let fTag = tag.trim().replace(/\"/ig, "");
+
+            if (!tags.includes(fTag)) {
+                console.log("Tag '" + fTag + "' for recipe #" + split[0] + " is not valid!");
+            }
+
+            rTags.push(fTag);
         });
 
         recipes.push({
             id: split[0],
             name: split[1],
-            tags: tags,
+            tags: rTags,
             aRating: split[3] || "NULL",
             jRating: split[4] || "NULL",
             hRating: split[5] || "NULL"
