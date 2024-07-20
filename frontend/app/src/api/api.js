@@ -112,6 +112,15 @@ const getCalendar = () => {
 }
 
 /**
+ * Gets the entire calendar from the database with tags for each recipe.
+ * @returns Entire calendar with tags
+ */
+const getCalendarWithTags = () => {
+    const url = "/api/calendar?tags=true";
+    return HTTPClient.get(url);
+}
+
+/**
  * Adds new dates to the calendar with null recipe IDs.
  * @param {Array} newDays New dates to add
  * @returns Entire updated calendar
@@ -144,6 +153,7 @@ const api = {
     deleteRecipe,
     getTags,
     getCalendar,
+    getCalendarWithTags,
     addCalendarDays,
     updateCalendar
 }
