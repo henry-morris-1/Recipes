@@ -68,7 +68,7 @@ function getTagProximities (calendar, tags) {
     // Iterate through the calendar to get the most recent occurance of each tag
     calendar.forEach(day => {
         day.tags.forEach(tag => {
-            tagProximities[tag] = (todaysDate - day.date) / (1000 * 3600 * 24);
+            tagProximities[tag] = Math.max((todaysDate - day.date) / (1000 * 3600 * 24), 0);
         });
     });
 
