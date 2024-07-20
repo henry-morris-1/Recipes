@@ -35,9 +35,7 @@ export default function Calendar () {
         api.getCalendar().then(formatCalendar);
 
         // Recipes
-        api.getRecipes().then(response => {
-            setRecipes(response);
-        });
+        api.getRecipes().then(setRecipes);
 
         // Today's date
         const now = new Date(new Date().setHours(0, 0, 0, 0));
@@ -47,18 +45,22 @@ export default function Calendar () {
     // Whenever the calendar updates, set the initial week and check whether to add more days to
     // the calendar
     useEffect(() => {
-        if (calendar) {
-            checkAddDays();
-            setCurrentWeek(calendar.length - 2);
+        if (calendar && today) {
+            let w = (today.getDay() < 6) ? calendar.length - 2 : calendar.length - 3;
+            setCurrentWeek(w);
+            setSelectedWeek(w);
+        }
+    }, [calendar, today]);
+
+    // Hide the component until loaded
+    const handleLoad = useContext(LoaderContext);
+    const [isLoaded, setIsLoaded] = useState(false);
+    useEffect(() => {
+        if (calendar && calendar.length > 0) {
+            handleLoad();
+            setIsLoaded(true);
         }
     }, [calendar]);
-
-    // Once the current week is set, initialize the selected week to match
-    useEffect(() => {
-        if (currentWeek !== 0) {
-            setSelectedWeek(currentWeek);
-        }
-    }, [currentWeek]);
 
     // Format the calendar into a 2D array broken into weeks
     function formatCalendar (response) {
@@ -73,32 +75,6 @@ export default function Calendar () {
         setCalendar(newCalendar);
     }
 
-    // Add more days to the calendar if it isn't up to date
-    function checkAddDays () {
-        // Get the last day in the calendar and set a target one week from today
-        const lastDay = new Date(calendar.slice(-1)[0].slice(-1)[0].date.replace(/-/g, "\/").replace(/T.+/, ""));
-        const target = new Date(new Date().setDate(today.getDate() + 7));
-
-        // If the target isn't in the calendar or is the last day, add more days
-        if (target.getTime() >= lastDay.getTime()) {
-            const days = []; // Keep an array of the days to add
-
-            // Loop until the target is included
-            while (lastDay <= target) {
-                // Add a week at a time
-                for (let d = 0; d < 7; d++) {
-                    lastDay.setDate(lastDay.getDate() + 1); // Increment by a day
-                    days.push(lastDay.toISOString().split("T")[0]); // Put the string in the array
-                }
-            }
-
-            // Add the days using the API, then update the calendar
-            if (days.length > 0) {
-                api.addCalendarDays(days).then(formatCalendar);
-            }
-        }
-    }
-
     // Create a new header for the date range of the week
     function setDateHeader () {
         if (calendar) {
@@ -110,16 +86,6 @@ export default function Calendar () {
             return `${parseInt(from.slice(5,7))}/${parseInt(from.slice(8,10))} \u{02013} ${parseInt(to.slice(5,7))}/${parseInt(to.slice(8,10))}`;
         }
     }
-
-    // Hide the component until loaded
-    const handleLoad = useContext(LoaderContext);
-    const [isLoaded, setIsLoaded] = useState(false);
-    useEffect(() => {
-        if (calendar && calendar.length > 0) {
-            handleLoad();
-            setIsLoaded(true);
-        }
-    }, [calendar]);
 
     return (
         <div className="m-2 mt-4 page">

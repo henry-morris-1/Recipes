@@ -2,6 +2,41 @@ const db = require("../DBConnection");
 const Day = require("../models/Day");
 
 /**
+ * Automatically adds days to the calendar to ensure at least a week out from the current
+ * date is included.
+ */
+function addDaysHelper () {
+    // Get today's date and a target a week out
+    const today = new Date(new Date().setHours(0, 0, 0, 0));
+    const target = new Date(new Date().setDate(today.getDate() + 7));
+
+    return db.query("SELECT date FROM calendar ORDER BY date DESC LIMIT 1").then(({results}) => {
+        const lastDay = new Date(results[0].date);
+
+        // If the target isn't in the calendar or is the last day, add more days
+        if (target.getTime() >= lastDay.getTime()) {
+            const days = []; // Keep an array of the days to add
+
+            // Loop until the target is included
+            while (lastDay <= target) {
+                // Add a week at a time
+                for (let d = 0; d < 7; d++) {
+                    lastDay.setDate(lastDay.getDate() + 1); // Increment by a day
+                    days.push(lastDay.toISOString().split("T")[0]); // Put the string in the array
+                }
+            }
+
+            // Add the days
+            if (days.length > 0) {
+                return postCalendar(days);
+            }
+        } else {
+            return;
+        }
+    });
+}
+
+/**
  * Adds the tags for the recipe of the given day
  * @param {Array} days Days to add tags to
  * @returns Days with tags
@@ -31,8 +66,10 @@ function recipeTagHelper (days) {
  * @returns Calendar
  */
 function getCalendar () {
-    return db.query("SELECT date, recipe_id, recipe_name FROM calendar LEFT JOIN recipes ON calendar.recipe_id_fk = recipes.recipe_id ORDER BY date").then(({results}) => {
-        return results.map(day => new Day(day));
+    return addDaysHelper().then(() => {
+        return db.query("SELECT date, recipe_id, recipe_name FROM calendar LEFT JOIN recipes ON calendar.recipe_id_fk = recipes.recipe_id ORDER BY date").then(({results}) => {
+            return results.map(day => new Day(day));
+        });
     });
 }
 
@@ -41,15 +78,16 @@ function getCalendar () {
  * @returns Calendar
  */
 function getCalendarWithTags () {
-    return db.query("SELECT date, recipe_id, recipe_name FROM calendar LEFT JOIN recipes ON calendar.recipe_id_fk = recipes.recipe_id ORDER BY date").then(({results}) => {
-        return recipeTagHelper(results.map(day => new Day(day)));
+    return addDaysHelper().then(() => {
+        return db.query("SELECT date, recipe_id, recipe_name FROM calendar LEFT JOIN recipes ON calendar.recipe_id_fk = recipes.recipe_id ORDER BY date").then(({results}) => {
+            return recipeTagHelper(results.map(day => new Day(day)));
+        });
     });
 }
 
 /**
  * Adds the given dates to the calendar with null recipes
  * @param {Array} newDays Array of datestrings to add
- * @returns Entire calendar
  */
 function postCalendar (newDays) {
     const promises = [];
@@ -61,7 +99,7 @@ function postCalendar (newDays) {
     });
 
     return Promise.all(promises).then(() => {
-        return getCalendar();
+        return;
     });
 }
 
