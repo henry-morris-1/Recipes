@@ -1,9 +1,86 @@
+/** Import API */
+import api from "../api/api";
+
+/** Make tag proximities globally accessible */
+let tagProximities;
+
 /**
- * 
- * @param {Array} recipes Array of all recipes
- * @returns 
+ * Gets top suggested recipes.
+ * @returns Top rated old, new, and breakfast recipes
  */
-function getSuggestions (recipes) {
+function getSuggestions () {
+    // Create an array of promises for the API calls
+    const promises = [];
+
+    // Get recipes, calendar, and tags from the API
+    let recipes, calendar, tags;
+    promises.push(api.getRecipes().then(response => { recipes = response }));
+    promises.push(api.getCalendarWithTags().then(response => { calendar = response }));
+    promises.push(api.getTags().then(response => { tags = response }));
+
+    // Once the API calls are done, evaluate the recipes
+    return Promise.all(promises).then(() => {
+        // Get tage proximities and split the recipes by category
+        tagProximities = getTagProximities(calendar, tags);
+        let { oldRecipes, newRecipes, breakfastRecipes } = splitRecipes(recipes);
+
+        // Sort the recipes
+        oldRecipes.sort(sort);
+        newRecipes.sort(sort);
+        breakfastRecipes.sort(sort);
+
+        // Return the top rated of each category
+        return {
+            old: oldRecipes.slice(0, 5),
+            new: newRecipes.slice(0, 5),
+            breakfast: breakfastRecipes.slice(0, 3)
+        }
+    });
+}
+
+/**
+ * Gets the number of days since each type of recipe has appeared in
+ * the calendar.
+ * @param {Array} calendar Calendar of recipes
+ * @param {Array} tags Recipe tags
+ * @returns Object containing all tags and their temporal proximities
+ */
+function getTagProximities (calendar, tags) {
+    // Create an object to hold the tags and dates
+    const tagProximities = {};
+
+    // Convert the calendar's dates into Date objects
+    calendar.forEach(day => {
+        day.date = new Date (new Date(day.date.replace(/-/g, "\/").replace(/T.+/, "")).setHours(0,0,0,0));
+    });
+
+    // Get today's date and a default date, one day before the calendar starts
+    let todaysDate = new Date(new Date().setHours(0, 0, 0, 0));
+    let defaultDate = calendar[0].date;
+    defaultDate.setDate(defaultDate.getDate() - 1);
+
+    // Set the default proximity for each tag
+    let defaultProximity = (todaysDate - defaultDate) / (1000 * 3600 * 24);
+    tags.forEach(tag => {
+        tagProximities[tag] = defaultProximity;
+    });
+
+    // Iterate through the calendar to get the most recent occurance of each tag
+    calendar.forEach(day => {
+        day.tags.forEach(tag => {
+            tagProximities[tag] = (todaysDate - day.date) / (1000 * 3600 * 24);
+        });
+    });
+
+    return tagProximities;
+}
+
+/**
+ * Categorizes recipes into old, new, and breakfast.
+ * @param {Array} recipes All recipes
+ * @returns Old recipe, new recipe, and breakfast recipe arrays
+ */
+function splitRecipes (recipes) {
     const oldRecipes = [];
     const newRecipes = [];
     const breakfastRecipes = [];
@@ -18,38 +95,35 @@ function getSuggestions (recipes) {
         }
     });
 
-    return {
-        old: getOld(oldRecipes),
-        new: getNew(newRecipes),
-        breakfast: getBreakfast(breakfastRecipes)
-    }
+    return { oldRecipes, newRecipes, breakfastRecipes };
 }
 
 /**
- * 
- * @param {Array} recipes Old recipes
- * @returns 
+ * Uses the getScore sorting algorithm to sort recipes
  */
-function getOld (recipes) {
-    return recipes.slice(0, 5);
+function sort (a, b) {
+    return getScore(b) - getScore(a);
 }
 
 /**
- * 
- * @param {Array} recipes New recipes
- * @returns 
+ * Factors in tag proximities and previous ratings to rate
+ * a given recipe.
+ * @param {Object} recipe Recipe to evaluate
+ * @returns Score for the given recipe
  */
-function getNew (recipes) {
-    return recipes.slice(0, 5);
-}
+function getScore (recipe) {
+    // Get the average tag proximity
+    let sum = 0;
+    recipe.tags.forEach(tag => {
+        sum += tagProximities[tag];
+    });
+    sum /= recipe.tags.length;
 
-/**
- * 
- * @param {Array} recipes Breakfast recipes
- * @returns 
- */
-function getBreakfast (recipes) {
-    return recipes.slice(0, 5);
+    // Get the total rating score
+    let rating = (recipe.aRating || 0) + (recipe.jRating || 0) + (recipe.hRating || 0);
+
+    // Weight and add the two factors
+    return sum + rating;
 }
 
 const suggestions = {

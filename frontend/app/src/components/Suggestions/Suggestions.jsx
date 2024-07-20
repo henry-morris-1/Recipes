@@ -1,8 +1,5 @@
 import { useContext, useEffect, useState } from "react";
 
-/** Import the recipe API */
-import api from "../../api/api";
-
 /** Import suggestion algorithms */
 import suggestions from "../../algorithms/suggestions";
 
@@ -15,21 +12,14 @@ import RecipeCard from "../Recipe/RecipeCard";
 /**
  * 
  */
-export default function Home () {
-    // Get the recipes from the API
-    const [recipes, setRecipes] = useState([]);
-    useEffect(() => {
-        api.getRecipes().then(setRecipes);
-    }, []);
-
+export default function Suggestions () {
     // Get the suggestions
     const [suggestedRecipes, setSuggestedRecipes] = useState(null);
     useEffect(() => {
-        if (recipes.length > 0) {
-            let s = suggestions.getSuggestions(recipes);
-            setSuggestedRecipes(s);
-        }
-    }, [recipes]);
+        suggestions.getSuggestions().then(response => {
+            setSuggestedRecipes(response);
+        });
+    }, []);
 
     // Hide the component until loaded
     const handleLoad = useContext(LoaderContext);
@@ -44,22 +34,25 @@ export default function Home () {
     return (
         <div className="m-2 page">
             {isLoaded && <>
-                {suggestedRecipes.old.map((recipe, i) => (
-                    <RecipeCard recipe={ recipe } key={ i } />
-                ))}
-
-                <hr className="my-4 border-b border-current" />
-
-                {suggestedRecipes.new.map((recipe, i) => (
-                    <RecipeCard recipe={ recipe } key={ i } />
-                ))}
-
-                <hr className="my-4 border-b border-current" />
-
-                {suggestedRecipes.breakfast.map((recipe, i) => (
-                    <RecipeCard recipe={ recipe } key={ i } />
-                ))}
+                <SuggestionSection title={ "Revisit an old recipe" } recipes={ suggestedRecipes.old } />
+                <SuggestionSection title={ "Try something new" } recipes={ suggestedRecipes.new } />
+                <SuggestionSection title={ "Breakfast favorites" } recipes={ suggestedRecipes.breakfast } />
             </>}
         </div>
+    );
+}
+
+function SuggestionSection ({title, recipes}) {
+    return (
+        <section className="mt-6 first-of-type:mt-4">
+            <h2 className="text-3xl font-semibold">{title}</h2>
+            <hr className="w-full border-t border-current mb-1" />
+
+            {recipes.map((recipe, i) => (
+                <div className="my-2" key={ i }>
+                    <RecipeCard recipe={ recipe } />
+                </div>
+            ))}
+        </section>
     );
 }
