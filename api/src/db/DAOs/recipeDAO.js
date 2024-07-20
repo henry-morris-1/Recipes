@@ -64,7 +64,7 @@ function getRecipeById (id) {
  * @returns Similar recipes
  */
 function getSimilarRecipes (id) {
-    return db.query("SELECT * FROM recipes JOIN (SELECT recipe_id FROM (SELECT B as recipe_id, COUNT(*) AS count FROM (SELECT a.recipe_id_fk AS A, b.recipe_id_fk AS B FROM recipe_tags AS a INNER JOIN recipe_tags AS b ON a.tag_name_fk = b.tag_name_fk WHERE a.recipe_id_fk != b.recipe_id_fk) I WHERE A = ? GROUP BY B) J WHERE count > 1) K ON recipes.recipe_id = K.recipe_id", [id]).then(({results}) => {
+    return db.query("SELECT * FROM recipes JOIN (SELECT recipe_id FROM (SELECT B as recipe_id, COUNT(*) AS count FROM (SELECT a.recipe_id_fk AS A, b.recipe_id_fk AS B FROM recipe_tags AS a INNER JOIN recipe_tags AS b ON a.tag_name_fk = b.tag_name_fk WHERE a.recipe_id_fk != b.recipe_id_fk) I WHERE A = ? GROUP BY B) J WHERE count > 2) K ON recipes.recipe_id = K.recipe_id", [id]).then(({results}) => {
         return getRecipesHelper(results.map(recipe => new Recipe(recipe)));
     });
 }
