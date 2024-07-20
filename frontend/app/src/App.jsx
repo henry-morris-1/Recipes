@@ -5,7 +5,7 @@ import { createBrowserRouter, RouterProvider } from "react-router-dom";
 /** Import components to be routed */
 import Login from "./components/Layout/Login";
 import Layout from "./components/Layout/Layout";
-import Home from "./components/Home/Home";
+import Suggestions from "./components/Suggestions/Suggestions";
 import RecipeList from "./components/Recipe/RecipeList";
 import Recipe from "./components/Recipe/Recipe";
 import Calendar from "./components/Calendar/Calendar";
@@ -25,7 +25,7 @@ const router = createBrowserRouter([
         children: [
             {
                 index: true,
-                element: <Home />
+                element: <Suggestions />
             },
             {
                 path: "recipes",
