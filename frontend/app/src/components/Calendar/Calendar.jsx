@@ -190,7 +190,7 @@ function CalendarModal ({ day, dateString, recipes, formatCalendar }) {
         <>
             <ModalButton modalRef={ modalRef }>
                 {day.recipeName ?
-                    <span className="underline click-toggle">{day.recipeName}</span>
+                    <span className="underline leading-4 click-toggle">{day.recipeName}</span>
                     :
                     <i className="material-symbols-outlined p-[0.025em] bg-green-600 text-white rounded-full text-[1.25em] click-toggle">add</i>
                 }
