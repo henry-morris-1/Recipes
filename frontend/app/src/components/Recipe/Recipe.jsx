@@ -15,6 +15,7 @@ import Modal from "../Modal/Modal";
 import { ModalButton } from "../Modal/Modal";
 import TabContainer from "../Container/TabContainer";
 import { Table, TableData, TableRow } from "../Table/Table";
+import ScheduleRecipe from "./ScheduleRecipe";
 import RecipeCard from "./RecipeCard";
 
 /**
@@ -80,6 +81,8 @@ export default function Recipe () {
                 </div>
 
                 <p className="text-base mt-3 mb-4">{recipe.tags.join(", ")}</p>
+
+                <ScheduleRecipeModal className="mb-4" recipeId={ recipe.id } />
                 
                 <TabContainer className="bg-neutral-300 after:bg-neutral-300 dark:bg-neutral-700 dark:after:bg-neutral-700 dark:text-white" title={ "Ratings" }>
                     <Table>
@@ -135,5 +138,24 @@ function EditRecipeModal ({ recipe, setRecipe }) {
                 </button>
             </ModalButton>
         </>
+    );
+}
+
+function ScheduleRecipeModal ({ className, recipeId }) {
+    const modalRef = useRef(null);
+
+    return (
+        <div className={className}>
+            <Modal title={"Add to calendar"} ref={modalRef}>
+                <ScheduleRecipe recipeId={ recipeId } />
+            </Modal>
+
+            <ModalButton modalRef={modalRef}>
+                <button className="flex items-center me-3 ps-2 pe-3 py-1 rounded-full bg-green-600 text-lg text-white click-toggle">
+                    <i className="material-symbols-outlined text-[1.25em] me-1 click-toggle">add</i>
+                    Add to calendar
+                </button>
+            </ModalButton>
+        </div>
     );
 }
