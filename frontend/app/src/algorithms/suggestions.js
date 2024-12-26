@@ -20,7 +20,7 @@ function getSuggestions () {
 
     // Once the API calls are done, evaluate the recipes
     return Promise.all(promises).then(() => {
-        // Get tage proximities and split the recipes by category
+        // Get tag proximities and split the recipes by category
         tagProximities = getTagProximities(calendar, tags);
         let { oldRecipes, newRecipes, breakfastRecipes } = splitRecipes(recipes);
 
@@ -113,17 +113,22 @@ function sort (a, b) {
  */
 function getScore (recipe) {
     // Get the average tag proximity
-    let sum = 0;
+    let avgTag = 0;
     recipe.tags.forEach(tag => {
-        sum += tagProximities[tag];
+        avgTag += tagProximities[tag];
     });
-    sum /= recipe.tags.length;
+    avgTag /= recipe.tags.length;
+
+    // Get the median tag proximitiy
+    let sortedProximities = [...recipe.tags].sort((a, b) => tagProximities[a] - tagProximities[b]);
+    let half = Math.floor(recipe.tags.length / 2);
+    let medTag = (recipe.tags.length % 2) ? sortedProximities[half] : (sortedProximities[half - 1] + sortedProximities[half]) / 2;
 
     // Get the total rating score
     let rating = (recipe.aRating || 0) + (recipe.jRating || 0) + (recipe.hRating || 0);
 
     // Weight and add the two factors
-    return sum + rating;
+    return ((avgTag + 3 * medTag) / 4) + (2 * rating);
 }
 
 const suggestions = {
