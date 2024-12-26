@@ -31,8 +31,10 @@ function getSuggestions () {
 
         // Give each recipe a score to use when sorting
         recipes.forEach(recipe => {
-            recipeScores[recipe] = getScore(recipe);
+            recipeScores[recipe.name] = getScore(recipe);
         });
+
+        console.log(recipeScores);
 
         // Sort the recipes
         let { oldRecipes, newRecipes, breakfastRecipes } = splitRecipes(recipes);
@@ -161,9 +163,9 @@ function getScore (recipe) {
     avgTag /= recipe.tags.length;
 
     // Get the median tag proximitiy
-    let sortedProximities = [...recipe.tags].sort((a, b) => tagProximities[a] - tagProximities[b]);
+    let sortedProximities = [...recipe.tags].sort((a, b) => { tagProximities[a] - tagProximities[b] });
     let half = Math.floor(recipe.tags.length / 2);
-    let medTag = (recipe.tags.length % 2) ? sortedProximities[half] : (sortedProximities[half - 1] + sortedProximities[half]) / 2;
+    let medTag = (recipe.tags.length % 2) ? tagProximities[sortedProximities[half]] : (tagProximities[sortedProximities[half - 1]] + tagProximities[sortedProximities[half]]) / 2;
 
     // Get the total rating score
     let rating = (recipe.aRating || 0) + (recipe.jRating || 0) + (recipe.hRating || 0);
@@ -176,7 +178,7 @@ function getScore (recipe) {
  * Uses the previously calculated scores to sort recipes.
  */
 function sort (a, b) {
-    return recipeScores[b] - recipeScores[a];
+    return recipeScores[b.name] - recipeScores[a.name];
 }
 
 const suggestions = {
