@@ -168,10 +168,10 @@ function getScore (recipe) {
     // Get the total rating score
     let rating = (recipe.aRating || 0) + (recipe.jRating || 0) + (recipe.hRating || 0);
 
-    console.log(recipe.name + "\n" + ((avgTag + 3 * medTag) / 4) + " + " + (4 * rating) + " + " + (0.75 * (Math.sqrt(recipeProximities[recipe.name]) - 5)));
+    console.log(recipe.name + "\n" + (avgTag + 3 * medTag) + " + " + (4 * rating) + " + " + (8 * (Math.sqrt(recipeProximities[recipe.name]) - 6)));
 
     // Weight and add the two factors
-    return ((avgTag + 3 * medTag) / 4) + (4 * rating) + (3 * (Math.sqrt(recipeProximities[recipe.name]) - 6));
+    return (avgTag + 3 * medTag) + (4 * rating) + (8 * (Math.sqrt(recipeProximities[recipe.name]) - 6));
 }
 
 /**
