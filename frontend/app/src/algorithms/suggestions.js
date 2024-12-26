@@ -1,8 +1,12 @@
 /** Import API */
 import api from "../api/api";
 
-/** Make tag proximities globally accessible */
+/** Make variables globally accessible */
+let todaysDate;
+let defaultDate;
 let tagProximities;
+let recipeProximities;
+const recipeScores = [];
 
 /**
  * Gets top suggested recipes.
@@ -21,10 +25,17 @@ function getSuggestions () {
     // Once the API calls are done, evaluate the recipes
     return Promise.all(promises).then(() => {
         // Get tag proximities and split the recipes by category
+        setCalendar(calendar);
         tagProximities = getTagProximities(calendar, tags);
-        let { oldRecipes, newRecipes, breakfastRecipes } = splitRecipes(recipes);
+        recipeProximities = getRecipeProximities(calendar, recipes);
+
+        // Give each recipe a score to use when sorting
+        recipes.forEach(recipe => {
+            recipeScores[recipe] = getScore(recipe);
+        });
 
         // Sort the recipes
+        let { oldRecipes, newRecipes, breakfastRecipes } = splitRecipes(recipes);
         oldRecipes.sort(sort);
         newRecipes.sort(sort);
         breakfastRecipes.sort(sort);
@@ -39,6 +50,24 @@ function getSuggestions () {
 }
 
 /**
+ * Converts the dates in the calendar to the correct format and sets
+ * global values for today's date as well as the initialization date 
+ * in the calendar.
+ * @param {Array} calendar Calendar of recipes
+ */
+function setCalendar (calendar) {
+    // Convert the calendar's dates into Date objects
+    calendar.forEach(day => {
+        day.date = new Date (new Date(day.date.replace(/-/g, "\/").replace(/T.+/, "")).setHours(0,0,0,0));
+    });
+
+    // Get today's date and a default date, one day before the calendar starts
+    todaysDate = new Date(new Date().setHours(0, 0, 0, 0));
+    defaultDate = calendar[0].date;
+    defaultDate.setDate(defaultDate.getDate() - 1);
+}
+
+/**
  * Gets the number of days since each type of recipe has appeared in
  * the calendar.
  * @param {Array} calendar Calendar of recipes
@@ -48,16 +77,6 @@ function getSuggestions () {
 function getTagProximities (calendar, tags) {
     // Create an object to hold the tags and dates
     const tagProximities = {};
-
-    // Convert the calendar's dates into Date objects
-    calendar.forEach(day => {
-        day.date = new Date (new Date(day.date.replace(/-/g, "\/").replace(/T.+/, "")).setHours(0,0,0,0));
-    });
-
-    // Get today's date and a default date, one day before the calendar starts
-    let todaysDate = new Date(new Date().setHours(0, 0, 0, 0));
-    let defaultDate = calendar[0].date;
-    defaultDate.setDate(defaultDate.getDate() - 1);
 
     // Set the default proximity for each tag
     let defaultProximity = (todaysDate - defaultDate) / (1000 * 3600 * 24);
@@ -73,6 +92,35 @@ function getTagProximities (calendar, tags) {
     });
 
     return tagProximities;
+}
+
+/**
+ * Gets the number of days since each recipe has appeared in the calendar.
+ * @param {Array} calendar Calendar of recipes
+ * @param {Array} recipes Recipes
+ * @returns Object containing all recipes and their temporal proximities
+ */
+function getRecipeProximities (calendar, recipes) {
+    // Create an object to hold the recipess and dates
+    const recipeProximities = {};
+
+    // Get today's date and a default date, one day before the calendar starts
+    let todaysDate = new Date(new Date().setHours(0, 0, 0, 0));
+    let defaultDate = calendar[0].date;
+    defaultDate.setDate(defaultDate.getDate() - 1);
+
+    // Set the default proximity for each recipe
+    let defaultProximity = (todaysDate - defaultDate) / (1000 * 3600 * 24);
+    recipes.forEach(recipe => {
+        recipeProximities[recipe.name] = defaultProximity;
+    });
+
+    // Iterate through the calendar to get the most recent occurance of each recipe
+    calendar.forEach(day => {
+        recipeProximities[day.recipeName] = Math.max((todaysDate - day.date) / (1000 * 3600 * 24), 0);
+    });
+
+    return recipeProximities;
 }
 
 /**
@@ -99,13 +147,6 @@ function splitRecipes (recipes) {
 }
 
 /**
- * Uses the getScore sorting algorithm to sort recipes
- */
-function sort (a, b) {
-    return getScore(b) - getScore(a);
-}
-
-/**
  * Factors in tag proximities and previous ratings to rate
  * a given recipe.
  * @param {Object} recipe Recipe to evaluate
@@ -128,7 +169,14 @@ function getScore (recipe) {
     let rating = (recipe.aRating || 0) + (recipe.jRating || 0) + (recipe.hRating || 0);
 
     // Weight and add the two factors
-    return ((avgTag + 3 * medTag) / 4) + (2 * rating);
+    return ((avgTag + 3 * medTag) / 4) + (2 * rating) + (0.75 * (Math.sqrt(recipeProximities[recipe.name]) - 5));
+}
+
+/**
+ * Uses the previously calculated scores to sort recipes.
+ */
+function sort (a, b) {
+    return recipeScores[b] - recipeScores[a];
 }
 
 const suggestions = {
