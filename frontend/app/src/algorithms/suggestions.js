@@ -34,8 +34,6 @@ function getSuggestions () {
             recipeScores[recipe.name] = getScore(recipe);
         });
 
-        console.log(recipeScores);
-
         // Sort the recipes
         let { oldRecipes, newRecipes, breakfastRecipes } = splitRecipes(recipes);
         oldRecipes.sort(sort);
@@ -170,8 +168,10 @@ function getScore (recipe) {
     // Get the total rating score
     let rating = (recipe.aRating || 0) + (recipe.jRating || 0) + (recipe.hRating || 0);
 
+    console.log(recipe.name + "\n" + ((avgTag + 3 * medTag) / 4) + " + " + (4 * rating) + " + " + (0.75 * (Math.sqrt(recipeProximities[recipe.name]) - 5)));
+
     // Weight and add the two factors
-    return ((avgTag + 3 * medTag) / 4) + (2 * rating) + (0.75 * (Math.sqrt(recipeProximities[recipe.name]) - 5));
+    return ((avgTag + 3 * medTag) / 4) + (4 * rating) + (3 * (Math.sqrt(recipeProximities[recipe.name]) - 6));
 }
 
 /**
